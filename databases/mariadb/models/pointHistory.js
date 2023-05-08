@@ -1,0 +1,33 @@
+const {
+  Model,
+} = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+  class pointHistory extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    // eslint-disable-next-line no-unused-vars
+    static associate(models) {
+      // define association here
+      pointHistory.belongsTo(models.point);
+      pointHistory.belongsTo(models.recycle);
+    }
+  }
+  pointHistory.init({
+    pointId: DataTypes.INTEGER,
+    recycleId: DataTypes.INTEGER,
+    date: DataTypes.DATE,
+    type: DataTypes.STRING,
+    description: DataTypes.TEXT,
+    amount: DataTypes.STRING,
+    startPoint: DataTypes.STRING,
+    currentPoint: DataTypes.STRING,
+  }, {
+    sequelize,
+    modelName: 'pointHistory',
+  });
+  return pointHistory;
+};

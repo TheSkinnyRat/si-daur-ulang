@@ -1,0 +1,13 @@
+const path = require('path');
+
+const config = path.resolve('databases/mariadb', 'config.js');
+const modelsPath = path.resolve('databases/mariadb', 'models');
+const seedersPath = path.resolve('databases/mariadb', 'seeders');
+const migrationsPath = path.resolve('databases/mariadb', 'migrations');
+
+module.exports = {
+  'config': config,
+  'models-path': modelsPath,
+  'seeders-path': seedersPath,
+  'migrations-path': migrationsPath
+};
