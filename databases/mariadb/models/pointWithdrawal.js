@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   pointWithdrawal.init({
     userId: DataTypes.INTEGER,
     date: DataTypes.DATE,
-    amount: DataTypes.STRING,
+    amount: DataTypes.DECIMAL(19, 4),
     pointWithdrawalStatusId: DataTypes.INTEGER,
   }, {
     sequelize,

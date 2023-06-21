@@ -35,13 +35,13 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       amount: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       startPoint: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       currentPoint: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       createdAt: {
         allowNull: false,

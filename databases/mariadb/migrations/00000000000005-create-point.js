@@ -18,7 +18,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       amount: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       createdAt: {
         allowNull: false,

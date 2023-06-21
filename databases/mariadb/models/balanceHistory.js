@@ -22,9 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     type: DataTypes.STRING,
     description: DataTypes.TEXT,
-    amount: DataTypes.STRING,
-    startBalance: DataTypes.STRING,
-    currentBalance: DataTypes.STRING,
+    amount: DataTypes.DECIMAL(19, 4),
+    startBalance: DataTypes.DECIMAL(19, 4),
+    currentBalance: DataTypes.DECIMAL(19, 4),
   }, {
     sequelize,
     modelName: 'balanceHistory',

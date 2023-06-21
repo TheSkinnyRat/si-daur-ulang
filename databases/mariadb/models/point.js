@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   point.init({
     userId: DataTypes.INTEGER,
-    amount: DataTypes.STRING,
+    amount: DataTypes.DECIMAL(19, 4),
   }, {
     sequelize,
     modelName: 'point',

@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     recycleStatusId: DataTypes.INTEGER,
     actualType: DataTypes.STRING,
     actualWeight: DataTypes.FLOAT,
-    actualPoint: DataTypes.STRING,
+    actualPoint: DataTypes.DECIMAL(19, 4),
   }, {
     sequelize,
     modelName: 'recycle',

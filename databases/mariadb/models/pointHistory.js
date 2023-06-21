@@ -22,9 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     date: DataTypes.DATE,
     type: DataTypes.STRING,
     description: DataTypes.TEXT,
-    amount: DataTypes.STRING,
-    startPoint: DataTypes.STRING,
-    currentPoint: DataTypes.STRING,
+    amount: DataTypes.DECIMAL(19, 4),
+    startPoint: DataTypes.DECIMAL(19, 4),
+    currentPoint: DataTypes.DECIMAL(19, 4),
   }, {
     sequelize,
     modelName: 'pointHistory',

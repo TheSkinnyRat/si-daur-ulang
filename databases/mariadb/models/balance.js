@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   balance.init({
     name: DataTypes.STRING,
-    amount: DataTypes.STRING,
+    amount: DataTypes.DECIMAL(19, 4),
   }, {
     sequelize,
     modelName: 'balance',

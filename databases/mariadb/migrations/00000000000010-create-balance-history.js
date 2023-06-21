@@ -35,13 +35,13 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       amount: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       startBalance: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       currentBalance: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       createdAt: {
         allowNull: false,

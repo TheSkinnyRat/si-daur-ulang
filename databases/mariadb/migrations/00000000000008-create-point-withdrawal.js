@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
       amount: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(19, 4),
       },
       pointWithdrawalStatusId: {
         type: Sequelize.INTEGER,
