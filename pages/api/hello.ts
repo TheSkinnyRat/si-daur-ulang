@@ -1,19 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import dbModels from '../../databases/mariadb/models';
+import baseResponse from '@lib/baseResponse';
+import dbModels from '@database/mariadb/models';
 
 const db: any = dbModels;
 const User = db.user;
 const UserRole = db.userRole;
 
-type Data = {
-  user?: object,
-  error?: string
-};
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>,
+  res: NextApiResponse,
 ) {
   try {
     const user = await User.findOne({
@@ -24,12 +20,12 @@ export default async function handler(
     });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return baseResponse.error(res, 404, 'User not found');
     }
 
-    return res.status(200).json({ user });
+    return baseResponse.ok(res, user);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    baseResponse.error(res, 500, error.message);
   }
   return undefined;
   // res.status(200).json({ name: 'John Doe' });
