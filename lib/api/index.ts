@@ -37,7 +37,7 @@ export const updateProfile = async (
   return response.data;
 };
 
-export const getUsers = async (accessToken: string) => {
+export const adminGetUsers = async (accessToken: string) => {
   const response = await axios.get(ENDPOINTS.ADMIN_USERS, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -46,7 +46,7 @@ export const getUsers = async (accessToken: string) => {
   return response.data;
 };
 
-export const getUser = async (accessToken: string, id: number) => {
+export const adminGetUser = async (accessToken: string, id: number) => {
   const response = await axios.get(ENDPOINTS.ADMIN_USER(id), {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -55,7 +55,7 @@ export const getUser = async (accessToken: string, id: number) => {
   return response.data;
 };
 
-export const addUser = async (
+export const adminAddUser = async (
   accessToken: string,
   data: I.IAddUserData,
 ) => {
@@ -67,7 +67,7 @@ export const addUser = async (
   return response.data;
 };
 
-export const updateUser = async (
+export const adminUpdateUser = async (
   accessToken: string,
   id: number,
   data: I.IUpdateUserData,
@@ -80,8 +80,47 @@ export const updateUser = async (
   return response.data;
 };
 
-export const deleteUser = async (accessToken: string, id: number) => {
+export const adminDeleteUser = async (accessToken: string, id: number) => {
   const response = await axios.delete(ENDPOINTS.ADMIN_USER(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetRecycles = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.USER_RECYCLES, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetRecycle = async (accessToken: string, id: number) => {
+  const response = await axios.get(ENDPOINTS.USER_RECYCLE(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userAddRecycle = async (
+  accessToken: string,
+  data: I.IAddRecycleData,
+) => {
+  const response = await axios.post(ENDPOINTS.USER_RECYCLES, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userDeleteRecycle = async (accessToken: string, id: number) => {
+  const response = await axios.delete(ENDPOINTS.USER_RECYCLE(id), {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

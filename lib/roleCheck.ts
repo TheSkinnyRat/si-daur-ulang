@@ -37,6 +37,6 @@ export default async function roleCheck(
   if (role === 'all') return user;
   if (user.userRole.name === role) return user;
 
-  baseResponse.error(res, 401, `Unauthorized!. Require ${role} role.`);
+  baseResponse.error(res, 401, `Unauthorized!. Require ${role} role. Your role is ${user.userRole.name}.`);
   return false;
 }

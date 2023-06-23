@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import NavbarRoom from '@components/organisms/user/Navbar';
 import LeftSideBar from '@/components/organisms/user/LeftSideBar';
 import CardProfile from '@/components/organisms/user/CardProfile';
+import CardRecycles from '@/components/organisms/user/CardRecycles';
+import CardRecyclesView from '@/components/organisms/user/CardRecyclesView';
+import CardRecyclesForm from '@/components/organisms/user/CardRecyclesForm';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -15,6 +18,15 @@ export default function App({ content, query }: IProps): JSX.Element {
   const displayContent = () => {
     if (content === 'profile') {
       return <CardProfile />;
+    }
+    if (content === 'recycles') {
+      return <CardRecycles />;
+    }
+    if (content === 'recyclesView') {
+      return <CardRecyclesView query={query} />;
+    }
+    if (content === 'recyclesAdd') {
+      return <CardRecyclesForm />;
     }
     return null;
   };

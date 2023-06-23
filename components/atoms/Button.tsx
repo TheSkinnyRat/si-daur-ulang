@@ -1,7 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React from 'react';
 
-export interface AppProps {
+export interface IProps {
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   variant?: 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'light' | 'dark' |
@@ -21,7 +21,7 @@ export default function App({
   className,
   disabled,
   children,
-}: AppProps): JSX.Element {
+}: IProps): JSX.Element {
   const variants = {
     primary: 'bg-indigo-500 enabled:hover:bg-indigo-600 text-slate-100 enabled:hover:text-slate-200 border border-indigo-500 || dark:bg-slate-200 dark:enabled:hover:bg-slate-300 dark:text-slate-800 dark:enabled:hover:text-slate-900 dark:border-slate-200',
     secondary: 'bg-slate-500 enabled:hover:bg-slate-600 text-slate-100 enabled:hover:text-slate-200 border border-slate-500',

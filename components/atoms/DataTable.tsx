@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
 import Alert, { IProps as IAlertProps } from '@/components/atoms/Alert';
 import Pagination from '@/components/atoms/Pagination';
-import Button from '@/components/atoms/Button';
+import Button, { IProps as IButtonProps } from '@/components/atoms/Button';
 
 export interface IProps {
-  datas: object[];
-  dataMappings: { [key: string]: string };
-  dataKey: string;
   alert: IAlertProps;
   itemsPerPage?: number;
-  action?: { [key: string]: (data: any) => void };
+  headers: string[];
+  datas: object[];
+  dataKey: string;
+  dataMappings: { [key: string]: string };
+  dataConditionalValue?: { [key: string]: (data: any) => string };
+  dataConditionalClassName?: { [key: string]: (data: any) => string };
+  actions?: (Omit<IButtonProps, 'onClick'> & { onClick: (data: any) => void })[];
 }
 
 export default function App({
-  datas,
-  dataMappings,
-  dataKey,
   alert,
   itemsPerPage,
-  action,
+  headers,
+  datas,
+  dataKey,
+  dataMappings,
+  dataConditionalValue,
+  dataConditionalClassName,
+  actions,
 }: IProps): JSX.Element {
   const [startItemOffset, setStartItemOffset] = useState(0);
 
   const displayedItemsPerPage = itemsPerPage || 5;
   const endItemOffset = startItemOffset + displayedItemsPerPage;
-  const displayedPlaylists = datas.slice(startItemOffset, endItemOffset);
+  const displayedDatas = datas.slice(startItemOffset, endItemOffset);
   const paginationPageCount = Math.ceil(datas.length / displayedItemsPerPage);
 
   const paginationOnPageChange = (event: any) => {
@@ -43,44 +49,44 @@ export default function App({
         <table className="w-full text-sm text-left text-zinc-500 dark:text-zinc-400">
           <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-zinc-700 dark:text-zinc-300">
             <tr>
-              <th scope="col" className="px-4 py-3">ID</th>
-              <th scope="col" className="px-4 py-3">KTP</th>
-              <th scope="col" className="px-4 py-3">Email</th>
-              <th scope="col" className="px-4 py-3">Phone</th>
-              <th scope="col" className="px-4 py-3">Name</th>
-              <th scope="col" className="px-4 py-3">Address</th>
-              <th scope="col" className="px-4 py-3">Role</th>
-              {action && <th scope="col" className="px-4 py-3 text-center">Action</th>}
+              {headers.map((header) => (
+                <th scope="col" className="px-4 py-3" key={header}>
+                  {header}
+                </th>
+              ))}
+              {actions && <th scope="col" className="px-4 py-3 text-center">Action</th>}
             </tr>
           </thead>
           <tbody>
-            {displayedPlaylists.map((data: any) => (
+            {displayedDatas.map((data: any) => (
               <tr className="border-b dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-700" key={data[dataKey]}>
                 {Object.keys(dataMappings).map((columnKey, columnIndex) => (
                   <td
                     className={`px-4 py-3 ${columnIndex === 0 ? 'font-medium text-zinc-900 whitespace-nowrap dark:text-white' : ''}`}
                     key={columnKey}
                   >
-                    {getColumnValue(data, columnKey)}
+                    <div className={dataConditionalClassName?.[columnKey] ? dataConditionalClassName[columnKey](getColumnValue(data, columnKey)) : ''}>
+                      {
+                        dataConditionalValue?.[columnKey]
+                          ? dataConditionalValue[columnKey](getColumnValue(data, columnKey))
+                          : getColumnValue(data, columnKey)
+                      }
+                    </div>
                   </td>
                 ))}
-                {action && (
+                {actions && (
                   <td className="px-4 py-3 whitespace-nowrap text-center font-medium">
-                    {Object.keys(action).map((actionKey) => (
+                    {actions.map((action, index) => (
                       <Button
-                        variant={actionKey === 'delete' ? 'danger' : 'secondary'}
-                        size="sm"
-                        key={actionKey}
-                        onClick={() => action[actionKey](data)}
-                        className={`rounded-md px-1 ${Object.keys(action).length > 1 ? 'mr-1' : ''}`}
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={index}
+                        size={action.size}
+                        variant={action.variant}
+                        disabled={action.disabled}
+                        onClick={() => action.onClick(data)}
+                        className={action.className}
                       >
-                        {actionKey === 'edit' && (
-                          <i className="fa-fw fa-solid fa-pen-to-square" />
-                        )}
-                        {actionKey === 'delete' && (
-                          <i className="fa-fw fa-solid fa-trash" />
-                        )}
-                        {/* {actionKey} */}
+                        {action.children}
                       </Button>
                     ))}
                   </td>

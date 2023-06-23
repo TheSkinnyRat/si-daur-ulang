@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers, deleteUser } from '@/lib/api';
+import { adminGetUsers, adminDeleteUser } from '@/lib/api';
 import { useSession } from 'next-auth/react';
 import { IProps as IAlertProps } from '@/components/atoms/Alert';
 import { useRouter } from 'next/router';
@@ -26,7 +26,7 @@ export default function App(): JSX.Element {
       isLoading: true,
     });
     try {
-      const response = await getUsers(session?.user.accessToken as string);
+      const response = await adminGetUsers(session?.user.accessToken as string);
       if (response.success) {
         const turncatedResponseData = response.success.data.map((user: any) => ({
           ...user,
@@ -55,7 +55,7 @@ export default function App(): JSX.Element {
       isLoading: true,
     });
     try {
-      const response = await deleteUser(session?.user.accessToken as string, id);
+      const response = await adminDeleteUser(session?.user.accessToken as string, id);
       if (response.success) {
         setAlert({
           message: response.success.data.message,
@@ -75,7 +75,7 @@ export default function App(): JSX.Element {
     const initialGetUsers = async () => {
       setIsLoading(true);
       try {
-        const response = await getUsers(session?.user.accessToken as string);
+        const response = await adminGetUsers(session?.user.accessToken as string);
         if (response.success) {
           const turncatedResponseData = response.success.data.map((user: any) => ({
             ...user,
@@ -127,6 +127,15 @@ export default function App(): JSX.Element {
           dataKey="id"
           itemsPerPage={10}
           alert={alert}
+          headers={[
+            'ID',
+            'KTP',
+            'Email',
+            'Phone',
+            'Name',
+            'Address',
+            'Role',
+          ]}
           datas={users}
           dataMappings={{
             id: 'id',
@@ -137,10 +146,24 @@ export default function App(): JSX.Element {
             address: 'address',
             role: 'userRole.name',
           }}
-          action={{
-            edit: (data: any) => router.push(`/admin/users/${data.id}`),
-            delete: (data: any) => deleteUserHandler(data.id),
-          }}
+          actions={[{
+            size: 'sm',
+            variant: 'secondary',
+            className: 'rounded-md px-1 mr-1',
+            onClick: (data: any) => router.push(`/admin/users/${data.id}`),
+            children: (
+              <i className="fa-fw fa-solid fa-pen-to-square" />
+            ),
+          }, {
+            size: 'sm',
+            variant: 'danger',
+            disabled: isLoading,
+            className: 'rounded-md px-1',
+            onClick: (data: any) => deleteUserHandler(data.id),
+            children: (
+              <i className="fa-fw fa-solid fa-trash" />
+            ),
+          }]}
         />
       </div>
     </div>

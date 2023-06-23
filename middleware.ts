@@ -3,7 +3,13 @@ import type { NextRequest } from 'next/server';
 import * as jose from 'jose';
 
 export default async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.startsWith('/api/admin') || req.nextUrl.pathname === '/api/profile') {
+  if (
+    req.nextUrl.pathname === '/api/profile'
+    || req.nextUrl.pathname.startsWith('/api/admin')
+    || req.nextUrl.pathname.startsWith('/api/staff')
+    || req.nextUrl.pathname.startsWith('/api/driver')
+    || req.nextUrl.pathname.startsWith('/api/user')
+  ) {
     const token = req.headers.get('authorization')?.split(' ')[1];
     if (!token) {
       return new Response(JSON.stringify({

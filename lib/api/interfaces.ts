@@ -42,3 +42,9 @@ export interface IUpdateUserData {
   password?: string,
   userRoleId?: number,
 }
+
+export interface IAddRecycleData {
+  type: string,
+  weight: number,
+  selfDelivery: number,
+}

@@ -21,8 +21,8 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
             「 SI Daur Ulang 」
           </Link>
         </div>
-        <div className="grow flex min-h-0 mx-auto">
-          <div className="overflow-auto">
+        <div className="grow flex min-h-0">
+          <div className="grow overflow-auto">
             <div className="block">
               <div className="p-3 text-sm font-bold text-slate-500 dark:text-zinc-400">
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
@@ -38,38 +38,17 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                   </div>
                 </LinkSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
-                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">DATA MANAGEMENT</div>
+                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">MENU</div>
                 <LinkSideBar
-                  href="/admin/users"
+                  href="/user/recycles"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname.split('/')[2] === 'users'}
+                  active={router.pathname.split('/')[2] === 'recycles'}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-users transition-none" />
-                    <span className="grow transition-none">User</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">S</span>
+                    <i className="fa-fw fa-solid fa-recycle transition-none" />
+                    <span className="grow transition-none">Recycles</span>
                   </div>
                 </LinkSideBar>
-                <ButtonSideBar
-                  onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
-                >
-                  <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-folder-open transition-none" />
-                    <span className="grow transition-none">Playlists</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">P</span>
-                  </div>
-                </ButtonSideBar>
-                <ButtonSideBar
-                  onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
-                >
-                  <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-clock-rotate-left transition-none" />
-                    <span className="grow transition-none">History</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">H</span>
-                  </div>
-                </ButtonSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
                 <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">OPTIONS</div>
                 <ButtonSideBar

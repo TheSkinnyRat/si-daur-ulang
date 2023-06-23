@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import Alert, { IProps as IAlertProps } from '@/components/atoms/Alert';
+import { useSession } from 'next-auth/react';
 import Link from '@/components/atoms/Link';
 import Button from '@/components/atoms/Button';
 import {
-  addUser,
-  getUser,
-  updateUser,
+  adminAddUser,
+  adminGetUser,
+  adminUpdateUser,
   IAddUserData,
   IUpdateUserData,
 } from '@/lib/api';
@@ -46,7 +46,7 @@ export default function App({ query }: IProps): JSX.Element {
       isLoading: true,
     });
     try {
-      const response = await addUser(
+      const response = await adminAddUser(
         session!.user.accessToken,
         inputValue as IAddUserData,
       );
@@ -77,7 +77,7 @@ export default function App({ query }: IProps): JSX.Element {
       isLoading: true,
     });
     try {
-      const response = await updateUser(
+      const response = await adminUpdateUser(
         session!.user.accessToken,
         queryId,
         {
@@ -130,7 +130,7 @@ export default function App({ query }: IProps): JSX.Element {
         isLoading: true,
       });
       try {
-        const response = await getUser(
+        const response = await adminGetUser(
           session?.user.accessToken as string,
           queryId,
         );

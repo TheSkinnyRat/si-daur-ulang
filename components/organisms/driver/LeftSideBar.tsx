@@ -38,16 +38,15 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                   </div>
                 </LinkSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
-                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">DATA MANAGEMENT</div>
+                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">MENU</div>
                 <LinkSideBar
-                  href="/admin/users"
+                  href="/driver/recycles"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname.split('/')[2] === 'users'}
+                  active={router.pathname.split('/')[2] === 'recycles'}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-users transition-none" />
-                    <span className="grow transition-none">User</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">S</span>
+                    <i className="fa-fw fa-solid fa-recycle transition-none" />
+                    <span className="grow transition-none">Recycles</span>
                   </div>
                 </LinkSideBar>
                 <ButtonSideBar

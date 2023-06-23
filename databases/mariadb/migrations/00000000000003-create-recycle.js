@@ -26,6 +26,14 @@ module.exports = {
       selfDelivery: {
         type: Sequelize.BOOLEAN,
       },
+      driverId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      },
       recycleStatusId: {
         type: Sequelize.INTEGER,
         references: {
