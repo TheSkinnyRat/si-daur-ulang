@@ -6,7 +6,7 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/driver');
+    router.push('/driver/recycles/request');
   }, [router]);
 
   return (

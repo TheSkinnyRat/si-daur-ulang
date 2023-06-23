@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from '@components/atoms/Link';
 import { useRouter } from 'next/router';
-import ButtonSideBar from '@components/atoms/ButtonSideBar';
 import LinkSideBar from '@components/atoms/LinkSideBar';
 
 export interface IProps {
@@ -40,45 +39,35 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
                 <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">MENU</div>
                 <LinkSideBar
-                  href="/driver/recycles"
+                  href="/driver/recycles/request"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname.split('/')[2] === 'recycles'}
+                  active={router.pathname.endsWith('recycles/request')}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-recycle transition-none" />
-                    <span className="grow transition-none">Recycles</span>
+                    <span className="grow transition-none">Recycles Request</span>
                   </div>
                 </LinkSideBar>
-                <ButtonSideBar
+                <LinkSideBar
+                  href="/driver/recycles/pickup"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
+                  active={router.pathname.endsWith('recycles/pickup')}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-folder-open transition-none" />
-                    <span className="grow transition-none">Playlists</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">P</span>
+                    <i className="fa-fw fa-solid fa-recycle transition-none" />
+                    <span className="grow transition-none">Recycles Pickup</span>
                   </div>
-                </ButtonSideBar>
-                <ButtonSideBar
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/driver/recycles/picked"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
+                  active={router.pathname.endsWith('recycles/picked')}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
-                    <i className="fa-fw fa-solid fa-clock-rotate-left transition-none" />
-                    <span className="grow transition-none">History</span>
-                    <span className="w-5 text-center rounded border-0 text-xs bg-slate-400/50 text-slate-800 dark:bg-zinc-700 dark:text-zinc-200">H</span>
+                    <i className="fa-fw fa-solid fa-recycle transition-none" />
+                    <span className="grow transition-none">Recycles Delivery</span>
                   </div>
-                </ButtonSideBar>
-                <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
-                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">OPTIONS</div>
-                <ButtonSideBar
-                  onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
-                >
-                  <i className="fa-fw fa-solid fa-link transition-none" />
-                  {' '}
-                  Connect
-                </ButtonSideBar>
+                </LinkSideBar>
               </div>
             </div>
           </div>

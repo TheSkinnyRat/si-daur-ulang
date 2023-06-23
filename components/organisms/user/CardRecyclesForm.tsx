@@ -6,7 +6,7 @@ import Link from '@/components/atoms/Link';
 import Button from '@/components/atoms/Button';
 import {
   userAddRecycle,
-  IAddRecycleData,
+  IUserAddRecycleData,
 } from '@/lib/api';
 
 export default function App(): JSX.Element {
@@ -18,7 +18,7 @@ export default function App(): JSX.Element {
     message: 'Request new recycle',
     isLoading: false,
   });
-  const [inputValue, setInputValue] = useState<IAddRecycleData>({
+  const [inputValue, setInputValue] = useState<IUserAddRecycleData>({
     type: '',
     weight: 0,
     selfDelivery: 0,

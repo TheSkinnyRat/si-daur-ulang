@@ -7,8 +7,8 @@ import {
   adminAddUser,
   adminGetUser,
   adminUpdateUser,
-  IAddUserData,
-  IUpdateUserData,
+  IAdminAddUserData,
+  IAdminUpdateUserData,
 } from '@/lib/api';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -25,7 +25,7 @@ export default function App({ query }: IProps): JSX.Element {
     message: 'Add a new user',
     isLoading: false,
   });
-  const [inputValue, setInputValue] = useState<IAddUserData | IUpdateUserData>({
+  const [inputValue, setInputValue] = useState<IAdminAddUserData | IAdminUpdateUserData>({
     idCard: '',
     email: '',
     password: '',
@@ -48,7 +48,7 @@ export default function App({ query }: IProps): JSX.Element {
     try {
       const response = await adminAddUser(
         session!.user.accessToken,
-        inputValue as IAddUserData,
+        inputValue as IAdminAddUserData,
       );
       if (response.success) {
         setIsAddDone(true);

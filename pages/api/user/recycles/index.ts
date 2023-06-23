@@ -20,8 +20,7 @@ export default async function handler(
       const users = await Recycle.findAll({
         include: [{
           model: RecycleStatus,
-        },
-        {
+        }, {
           model: User,
           as: 'driver',
           attributes: { exclude: ['password'] },

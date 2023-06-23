@@ -3,6 +3,6 @@ import Dashboard from '@components/templates/driver/Dashboard';
 
 export default function App() {
   return (
-    <Dashboard content="recyclesAdd" />
+    <Dashboard content="recyclesPickup" />
   );
 }

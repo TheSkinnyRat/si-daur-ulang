@@ -4,14 +4,12 @@ import Footer from '@components/organisms/Footer';
 import { useSession } from 'next-auth/react';
 import ContentDashboard from '@/components/organisms/driver/ContentDashboard';
 import { useRouter } from 'next/router';
-import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
   content?: string;
-  query?: ParsedUrlQuery;
 }
 
-export default function App({ content, query }: IProps): JSX.Element {
+export default function App({ content }: IProps): JSX.Element {
   const router = useRouter();
   const { data: session } = useSession({
     required: true,
@@ -34,7 +32,7 @@ export default function App({ content, query }: IProps): JSX.Element {
       <div className="flex flex-col h-full overflow-x-hidden">
         <section id="secDashboard" className="grow flex flex-col overflow-y-auto bg-slate-50 dark:bg-zinc-900">
           <div className="grow flex min-h-0">
-            <ContentDashboard content={content} query={query} />
+            <ContentDashboard content={content} />
           </div>
         </section>
         <Footer />

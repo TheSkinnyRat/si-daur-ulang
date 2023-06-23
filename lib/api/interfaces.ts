@@ -23,7 +23,7 @@ export interface IUpdateProfileData {
   rePassword?: string,
 }
 
-export interface IAddUserData {
+export interface IAdminAddUserData {
   idCard: string,
   email: string,
   phone: string,
@@ -33,7 +33,7 @@ export interface IAddUserData {
   userRoleId: number,
 }
 
-export interface IUpdateUserData {
+export interface IAdminUpdateUserData {
   idCard?: string,
   email?: string,
   phone?: string,
@@ -43,8 +43,12 @@ export interface IUpdateUserData {
   userRoleId?: number,
 }
 
-export interface IAddRecycleData {
+export interface IUserAddRecycleData {
   type: string,
   weight: number,
   selfDelivery: number,
+}
+
+export interface IDriverUpdateRecycleData {
+  recycleStatusId: number,
 }

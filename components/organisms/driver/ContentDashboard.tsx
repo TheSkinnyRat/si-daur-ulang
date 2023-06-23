@@ -2,23 +2,29 @@ import React, { useState } from 'react';
 import NavbarRoom from '@components/organisms/user/Navbar';
 import LeftSideBar from '@/components/organisms/driver/LeftSideBar';
 import CardProfile from '@/components/organisms/driver/CardProfile';
-import CardRecycles from '@/components/organisms/driver/CardRecycles';
-import { ParsedUrlQuery } from 'querystring';
+import CardRecyclesRequest from '@/components/organisms/driver/CardRecyclesRequest';
+import CardRecyclesPickup from '@/components/organisms/driver/CardRecyclesPickup';
+import CardRecyclesPicked from '@/components/organisms/driver/CardRecyclesPicked';
 
 export interface IProps {
   content?: string;
-  query?: ParsedUrlQuery;
 }
 
-export default function App({ content, query }: IProps): JSX.Element {
+export default function App({ content }: IProps): JSX.Element {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
   const displayContent = () => {
     if (content === 'profile') {
       return <CardProfile />;
     }
-    if (content === 'recycles') {
-      return <CardRecycles />;
+    if (content === 'recyclesRequest') {
+      return <CardRecyclesRequest />;
+    }
+    if (content === 'recyclesPickup') {
+      return <CardRecyclesPickup />;
+    }
+    if (content === 'recyclesPicked') {
+      return <CardRecyclesPicked />;
     }
     return null;
   };

@@ -57,7 +57,7 @@ export const adminGetUser = async (accessToken: string, id: number) => {
 
 export const adminAddUser = async (
   accessToken: string,
-  data: I.IAddUserData,
+  data: I.IAdminAddUserData,
 ) => {
   const response = await axios.post(ENDPOINTS.ADMIN_USERS, data, {
     headers: {
@@ -70,7 +70,7 @@ export const adminAddUser = async (
 export const adminUpdateUser = async (
   accessToken: string,
   id: number,
-  data: I.IUpdateUserData,
+  data: I.IAdminUpdateUserData,
 ) => {
   const response = await axios.patch(ENDPOINTS.ADMIN_USER(id), data, {
     headers: {
@@ -109,7 +109,7 @@ export const userGetRecycle = async (accessToken: string, id: number) => {
 
 export const userAddRecycle = async (
   accessToken: string,
-  data: I.IAddRecycleData,
+  data: I.IUserAddRecycleData,
 ) => {
   const response = await axios.post(ENDPOINTS.USER_RECYCLES, data, {
     headers: {
@@ -121,6 +121,46 @@ export const userAddRecycle = async (
 
 export const userDeleteRecycle = async (accessToken: string, id: number) => {
   const response = await axios.delete(ENDPOINTS.USER_RECYCLE(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const driverGetRecyclesRequest = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.DRIVER_RECYCLES_REQUEST, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const driverGetRecyclesPickup = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.DRIVER_RECYCLES_PICKUP, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const driverGetRecyclesPicked = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.DRIVER_RECYCLES_PICKED, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const driverUpdateRecycle = async (
+  accessToken: string,
+  id: number,
+  data: I.IDriverUpdateRecycleData,
+) => {
+  const response = await axios.patch(ENDPOINTS.DRIVER_RECYCLE(id), data, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
