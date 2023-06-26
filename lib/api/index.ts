@@ -168,4 +168,53 @@ export const driverUpdateRecycle = async (
   return response.data;
 };
 
+export const staffGetRecyclesRequest = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_RECYCLES_REQUEST, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetRecyclesAccepted = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_RECYCLES_ACCEPTED, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetRecyclesVerified = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_RECYCLES_VERIFIED, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetRecycle = async (accessToken: string, id: number) => {
+  const response = await axios.get(ENDPOINTS.STAFF_RECYCLE(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffUpdateRecycle = async (
+  accessToken: string,
+  id: number,
+  data: I.IStaffUpdateRecycleData,
+) => {
+  const response = await axios.patch(ENDPOINTS.STAFF_RECYCLE(id), data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
 export * from './interfaces';

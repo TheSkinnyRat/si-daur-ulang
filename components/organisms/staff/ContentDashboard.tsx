@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import NavbarRoom from '@components/organisms/user/Navbar';
-import LeftSideBar from '@/components/organisms/user/LeftSideBar';
-import CardProfile from '@/components/organisms/user/CardProfile';
+import NavbarRoom from '@components/organisms/staff/Navbar';
+import LeftSideBar from '@/components/organisms/staff/LeftSideBar';
+import CardProfile from '@/components/organisms/staff/CardProfile';
+import CardRecyclesRequest from '@/components/organisms/staff/CardRecyclesRequest';
+import CardRecyclesAccepted from '@/components/organisms/staff/CardRecyclesAccepted';
+import CardRecyclesVerified from '@/components/organisms/staff/CardRecyclesVerified';
+import CardRecyclesView from '@/components/organisms/staff/CardRecyclesView';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -15,6 +19,18 @@ export default function App({ content, query }: IProps): JSX.Element {
   const displayContent = () => {
     if (content === 'profile') {
       return <CardProfile />;
+    }
+    if (content === 'recyclesRequest') {
+      return <CardRecyclesRequest />;
+    }
+    if (content === 'recyclesAccepted') {
+      return <CardRecyclesAccepted />;
+    }
+    if (content === 'recyclesVerified') {
+      return <CardRecyclesVerified />;
+    }
+    if (content === 'recyclesView') {
+      return <CardRecyclesView query={query} />;
     }
     return null;
   };

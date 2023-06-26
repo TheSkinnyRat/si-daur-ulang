@@ -52,3 +52,10 @@ export interface IUserAddRecycleData {
 export interface IDriverUpdateRecycleData {
   recycleStatusId: number,
 }
+
+export interface IStaffUpdateRecycleData {
+  recycleStatusId: number,
+  actualType?: string,
+  actualWeight?: number,
+  actualPoint?: number,
+}

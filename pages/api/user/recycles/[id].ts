@@ -29,6 +29,7 @@ export default async function handler(
           userId: user.id,
         },
       });
+      if (!users.length) return baseResponse.error(res, 400, `Recycle with id ${req.query.id} is not exists`);
 
       return baseResponse.ok(res, users);
     } catch (error: any) {

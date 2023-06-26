@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Alert, { IProps as IAlertProps } from '@/components/atoms/Alert';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Link from '@/components/atoms/Link';
 import Button from '@/components/atoms/Button';
 import {
-  userGetRecycle,
-  userDeleteRecycle,
+  staffGetRecycle,
+  staffUpdateRecycle,
+  IStaffUpdateRecycleData,
 } from '@/lib/api';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -26,6 +26,12 @@ export default function App({ query }: IProps): JSX.Element {
   });
   const [recycle, setRecycle] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState<IStaffUpdateRecycleData>({
+    recycleStatusId: 4,
+    actualType: '',
+    actualWeight: undefined,
+    actualPoint: undefined,
+  });
 
   const getRecycleHandler = async () => {
     setIsLoading(true);
@@ -35,7 +41,7 @@ export default function App({ query }: IProps): JSX.Element {
       isLoading: true,
     });
     try {
-      const response = await userGetRecycle(
+      const response = await staffGetRecycle(
         session?.user.accessToken as string,
         queryId,
       );
@@ -54,19 +60,25 @@ export default function App({ query }: IProps): JSX.Element {
     }
   };
 
-  const deleteRecycleHandler = async (id: number) => {
+  const verifyRecycleHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     setAlert({
-      message: 'Deleting recycle ...',
+      message: 'Verifying recycle ...',
       isLoading: true,
     });
     try {
-      const response = await userDeleteRecycle(session?.user.accessToken as string, id);
+      const response = await staffUpdateRecycle(
+        session?.user.accessToken as string,
+        recycle?.id,
+        inputValue,
+      );
       if (response.success) {
         setAlert({
+          type: 'success',
           message: response.success.data.message,
         });
-        router.push('/user/recycles');
+        getRecycleHandler();
       }
     } catch (error: any) {
       setAlert({
@@ -87,7 +99,7 @@ export default function App({ query }: IProps): JSX.Element {
         isLoading: true,
       });
       try {
-        const response = await userGetRecycle(
+        const response = await staffGetRecycle(
           session?.user.accessToken as string,
           queryId,
         );
@@ -112,15 +124,15 @@ export default function App({ query }: IProps): JSX.Element {
     <div>
       <div className="bg-white dark:bg-zinc-800 border dark:border-zinc-700 relative shadow-md sm:rounded-lg overflow-hidden">
         <div className="m-2 mb-3">
-          <Link
-            href="/user/recycles"
+          <Button
             variant="link"
             size="xs"
             className="px-2 py-1 rounded-full transition-none"
+            onClick={() => router.back()}
           >
             <i className="fa-solid fa-arrow-left mr-1" />
             Back
-          </Link>
+          </Button>
           <Button
             variant="primary"
             size="xs"
@@ -191,19 +203,68 @@ export default function App({ query }: IProps): JSX.Element {
             </div>
           </div>
         )}
-        {recycle?.recycleStatusId === 0 && (
-          <div className="m-3">
-            <Button
-              size="sm"
-              variant="danger"
-              disabled={isLoading}
-              className="rounded-md p-1"
-              onClick={() => deleteRecycleHandler(recycle?.id)}
-            >
-              <i className="fa-solid fa-trash mr-1" />
-              Delete
-            </Button>
-          </div>
+        {recycle?.recycleStatusId === 3 && (
+          <>
+            <div className="px-4 py-3 text-xs text-slate-700 dark:text-zinc-300 uppercase font-bold bg-slate-100 dark:bg-zinc-700 border-y border-slate-300 dark:border-zinc-500">
+              <Alert type="success" message="Verify Recycle" />
+            </div>
+            <form className="grid grid-cols-none md:grid-cols-12 gap-5 m-3" onSubmit={verifyRecycleHandler}>
+              <label className="block col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualType">
+                <span className="text-slate-700 dark:text-slate-200">Actual Trash Type</span>
+                <input
+                  type="text"
+                  id="actualType"
+                  required
+                  disabled={isLoading}
+                  value={inputValue.actualType}
+                  onChange={(e) => setInputValue({ ...inputValue, actualType: e.target.value })}
+                  placeholder="Sampah Plastik / Kertas / Lainnya"
+                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
+                />
+              </label>
+              <label className="block md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualWeight">
+                <span className="text-slate-700 dark:text-slate-200">Actual Weight (kg)</span>
+                <input
+                  type="number"
+                  id="actualWeight"
+                  required
+                  disabled={isLoading}
+                  value={inputValue.actualWeight}
+                  onChange={(e) => setInputValue({
+                    ...inputValue,
+                    actualWeight: Number(e.target.value),
+                  })}
+                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
+                />
+              </label>
+              <label className="block md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualPoint">
+                <span className="text-slate-700 dark:text-slate-200">Actual Point</span>
+                <input
+                  type="number"
+                  id="actualPoint"
+                  required
+                  disabled={isLoading}
+                  value={inputValue.actualPoint}
+                  onChange={(e) => setInputValue({
+                    ...inputValue,
+                    actualPoint: Number(e.target.value),
+                  })}
+                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
+                />
+              </label>
+              <div className="mt-2 md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-4 lg:col-span-3 xl:col-span-2">
+                <Button
+                  type="submit"
+                  size="sm"
+                  variant="success"
+                  disabled={isLoading}
+                  className="w-full rounded-md p-1"
+                >
+                  Verify Recycle
+                </Button>
+              </div>
+            </form>
+          </>
         )}
       </div>
     </div>

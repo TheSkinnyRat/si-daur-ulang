@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '@components/templates/driver/Dashboard';
+import Dashboard from '@components/templates/staff/Dashboard';
 import { useRouter } from 'next/router';
 
 export default function App() {

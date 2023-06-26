@@ -12,6 +12,11 @@ const ENDPOINTS = {
   DRIVER_RECYCLES_PICKUP: `${CONFIG.BASE_URL}/driver/recycles/pickup`,
   DRIVER_RECYCLES_PICKED: `${CONFIG.BASE_URL}/driver/recycles/picked`,
   DRIVER_RECYCLE: (id: number) => `${CONFIG.BASE_URL}/driver/recycles/${id}`,
+  STAFF_RECYCLES: `${CONFIG.BASE_URL}/staff/recycles`,
+  STAFF_RECYCLE: (id: number) => `${CONFIG.BASE_URL}/staff/recycles/${id}`,
+  STAFF_RECYCLES_REQUEST: `${CONFIG.BASE_URL}/staff/recycles/request`,
+  STAFF_RECYCLES_ACCEPTED: `${CONFIG.BASE_URL}/staff/recycles/accepted`,
+  STAFF_RECYCLES_VERIFIED: `${CONFIG.BASE_URL}/staff/recycles/verified`,
 };
 
 export default ENDPOINTS;

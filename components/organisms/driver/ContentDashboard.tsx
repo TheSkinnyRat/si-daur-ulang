@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavbarRoom from '@components/organisms/user/Navbar';
+import NavbarRoom from '@components/organisms/driver/Navbar';
 import LeftSideBar from '@/components/organisms/driver/LeftSideBar';
 import CardProfile from '@/components/organisms/driver/CardProfile';
 import CardRecyclesRequest from '@/components/organisms/driver/CardRecyclesRequest';
