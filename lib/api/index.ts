@@ -154,6 +154,38 @@ export const userGetPoint = async (accessToken: string) => {
   return response.data;
 };
 
+export const userGetPointHistories = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.USER_POINT_HISTORIES, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetPointWithdraw = async (
+  accessToken: string,
+) => {
+  const response = await axios.get(ENDPOINTS.USER_POINT_WITHDRAWS, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userAddPointWithdraw = async (
+  accessToken: string,
+  data: I.IUserAddPointWithdrawData,
+) => {
+  const response = await axios.post(ENDPOINTS.USER_POINT_WITHDRAWS, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
 export const driverGetRecyclesRequest = async (accessToken: string) => {
   const response = await axios.get(ENDPOINTS.DRIVER_RECYCLES_REQUEST, {
     headers: {

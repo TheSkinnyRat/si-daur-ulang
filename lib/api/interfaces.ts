@@ -49,6 +49,12 @@ export interface IUserAddRecycleData {
   selfDelivery: number,
 }
 
+export interface IUserAddPointWithdrawData {
+  amount: number,
+  type: string,
+  typeValue: string,
+}
+
 export interface IDriverUpdateRecycleData {
   recycleStatusId: number,
 }

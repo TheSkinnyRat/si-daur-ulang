@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Alert, { IProps as IAlertProps } from '@/components/atoms/Alert';
 import { useSession } from 'next-auth/react';
 import Button from '@/components/atoms/Button';
+import Link from '@/components/atoms/Link';
 import {
   userGetPoint,
 } from '@/lib/api';
@@ -17,7 +18,7 @@ export default function App(): JSX.Element {
   const [point, setPoint] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const getRecycleHandler = async () => {
+  const getPointHandler = async () => {
     setIsLoading(true);
     setAlert({
       type: 'info',
@@ -80,7 +81,7 @@ export default function App(): JSX.Element {
             variant="primary"
             size="xs"
             disabled={isLoading}
-            onClick={getRecycleHandler}
+            onClick={getPointHandler}
             className="px-2 py-1 rounded-full ml-1"
           >
             <i className="fa-solid fa-rotate mr-1" />
@@ -94,6 +95,22 @@ export default function App(): JSX.Element {
           <span>Current Point: </span>
           <span className="font-semibold">{Number(point?.amount?.split('.')[0] || 0).toLocaleString('id-ID')}</span>
         </div>
+        <Link
+          href="/user/point/withdraws/add"
+          size="sm"
+          className="inline-block mb-3 ml-3 mr-1 px-2 py-1 rounded"
+        >
+          <i className="fa-solid fa-money-bill-wave mr-1" />
+          Withdraw
+        </Link>
+        <Link
+          href="/user/point/withdraws"
+          size="sm"
+          className="inline-block mb-3 px-2 py-1 rounded"
+        >
+          <i className="fa-solid fa-clock-rotate-left mr-1" />
+          Withdraw History
+        </Link>
       </div>
     </div>
   );

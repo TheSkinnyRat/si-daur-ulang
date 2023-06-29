@@ -51,11 +51,41 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                 <LinkSideBar
                   href="/user/point"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname.split('/')[2] === 'point'}
+                  active={router.pathname.endsWith('point')}
                 >
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-coins transition-none" />
                     <span className="grow transition-none">Point</span>
+                  </div>
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/user/point/histories"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('point/histories')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-coins transition-none" />
+                    <span className="grow transition-none">Point History</span>
+                  </div>
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/user/point/withdraws/add"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('point/withdraws/add')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-money-bill-wave transition-none" />
+                    <span className="grow transition-none">Point Withdraw</span>
+                  </div>
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/user/point/withdraws"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('point/withdraws')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-money-bill-wave transition-none" />
+                    <span className="grow transition-none">Point Withdraw History</span>
                   </div>
                 </LinkSideBar>
               </div>
