@@ -8,6 +8,8 @@ const db: any = dbModels;
 const User = db.user;
 const Recycle = db.recycle;
 const RecycleStatus = db.recycleStatus;
+const Point = db.point;
+const PointHistory = db.pointHistory;
 
 export default async function handler(
   req: NextApiRequest,
@@ -67,6 +69,49 @@ export default async function handler(
           id: req.query.id,
         },
       });
+
+      if (body.recycleStatusId === 4) {
+        const point = await Point.findOne({
+          where: {
+            userId: recycle.userId,
+          },
+        });
+        if (!point) {
+          const createdPoint = await Point.create({
+            userId: recycle.userId,
+            amount: body.actualPoint,
+          });
+          await PointHistory.create({
+            pointId: createdPoint.id,
+            recycleId: recycle.id,
+            date: new Date(),
+            type: 'credit',
+            description: 'Recycle verified',
+            amount: body.actualPoint,
+            startPoint: 0,
+            currentPoint: body.actualPoint,
+          });
+        } else {
+          point.amount = Number(point.amount);
+          await Point.update({
+            amount: point.amount + body.actualPoint,
+          }, {
+            where: {
+              userId: recycle.userId,
+            },
+          });
+          await PointHistory.create({
+            pointId: point.id,
+            recycleId: recycle.id,
+            date: new Date(),
+            type: 'credit',
+            description: 'Recycle verified',
+            amount: body.actualPoint,
+            startPoint: point.amount,
+            currentPoint: point.amount + body.actualPoint,
+          });
+        }
+      }
 
       return baseResponse.ok(res, { message: `Recycle with id ${req.query.id} has been updated successfully` });
     } catch (error: any) {

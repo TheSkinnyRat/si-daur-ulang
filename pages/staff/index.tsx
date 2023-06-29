@@ -6,7 +6,7 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/staff');
+    router.push('/staff/recycles/request');
   }, [router]);
 
   return (

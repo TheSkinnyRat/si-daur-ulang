@@ -5,6 +5,7 @@ import CardProfile from '@/components/organisms/user/CardProfile';
 import CardRecycles from '@/components/organisms/user/CardRecycles';
 import CardRecyclesView from '@/components/organisms/user/CardRecyclesView';
 import CardRecyclesForm from '@/components/organisms/user/CardRecyclesForm';
+import CardPoint from '@/components/organisms/user/CardPoint';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -27,6 +28,9 @@ export default function App({ content, query }: IProps): JSX.Element {
     }
     if (content === 'recyclesAdd') {
       return <CardRecyclesForm />;
+    }
+    if (content === 'point') {
+      return <CardPoint />;
     }
     return null;
   };

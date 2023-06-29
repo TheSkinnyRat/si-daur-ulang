@@ -1,6 +1,23 @@
 import axios from 'axios';
 import ENDPOINTS from '@lib/api/endpoints';
+import Router from 'next/router';
 import * as I from '@lib/api/interfaces';
+
+axios.interceptors.response.use(
+  null,
+  (error) => {
+    if (error?.response?.data?.error?.message?.includes('exp') && error?.response?.data?.error?.message?.includes('claim timestamp')) {
+      return Router.push({
+        pathname: '/auth/error',
+        query: {
+          callbackUrl: Router.query.callbackUrl ? Router.query.callbackUrl : Router.asPath,
+          error: 'Your session has expired. Please sign in again.',
+        },
+      });
+    }
+    return Promise.reject(error);
+  },
+);
 
 export const signIn = async (
   data: I.ISignInData,
@@ -121,6 +138,15 @@ export const userAddRecycle = async (
 
 export const userDeleteRecycle = async (accessToken: string, id: number) => {
   const response = await axios.delete(ENDPOINTS.USER_RECYCLE(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetPoint = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.USER_POINT, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

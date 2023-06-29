@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from '@components/atoms/Link';
 import { useRouter } from 'next/router';
-import ButtonSideBar from '@components/atoms/ButtonSideBar';
 import LinkSideBar from '@components/atoms/LinkSideBar';
 
 export interface IProps {
@@ -49,16 +48,16 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                     <span className="grow transition-none">Recycles</span>
                   </div>
                 </LinkSideBar>
-                <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
-                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">OPTIONS</div>
-                <ButtonSideBar
+                <LinkSideBar
+                  href="/user/point"
                   onClick={() => setIsSideMenuOpen(false)}
-                  active={router.pathname === '/dashboard'}
+                  active={router.pathname.split('/')[2] === 'point'}
                 >
-                  <i className="fa-fw fa-solid fa-link transition-none" />
-                  {' '}
-                  Connect
-                </ButtonSideBar>
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-coins transition-none" />
+                    <span className="grow transition-none">Point</span>
+                  </div>
+                </LinkSideBar>
               </div>
             </div>
           </div>
