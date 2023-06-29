@@ -3,6 +3,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('pointWithdrawalStatuses', [{
+      id: -1,
+      name: 'rejected',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }, {
       id: 0,
       name: 'requested',
       createdAt: new Date(),

@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userId: {
+      pointId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'users',
+          model: 'points',
         },
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
@@ -23,6 +23,12 @@ module.exports = {
       amount: {
         type: Sequelize.DECIMAL(19, 4),
       },
+      type: {
+        type: Sequelize.STRING,
+      },
+      typeValue: {
+        type: Sequelize.STRING,
+      },
       pointWithdrawalStatusId: {
         type: Sequelize.INTEGER,
         references: {
@@ -30,6 +36,9 @@ module.exports = {
         },
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
+      },
+      description: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

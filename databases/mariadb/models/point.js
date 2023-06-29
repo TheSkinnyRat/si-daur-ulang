@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       point.belongsTo(models.user);
       point.hasMany(models.pointHistory);
+      point.hasMany(models.pointWithdrawal);
     }
   }
   point.init({

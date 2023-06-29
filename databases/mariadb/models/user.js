@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       user.hasMany(models.recycle);
       user.hasMany(models.chat);
       user.hasOne(models.point);
-      user.hasMany(models.pointWithdrawal);
       // user.id -> recycle.driverId
       user.hasMany(models.recycle, {
         as: 'driver',

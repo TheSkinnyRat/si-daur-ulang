@@ -12,15 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     // eslint-disable-next-line no-unused-vars
     static associate(models) {
       // define association here
-      pointWithdrawal.belongsTo(models.user);
+      pointWithdrawal.belongsTo(models.point);
       pointWithdrawal.belongsTo(models.pointWithdrawalStatus);
     }
   }
   pointWithdrawal.init({
-    userId: DataTypes.INTEGER,
+    pointId: DataTypes.INTEGER,
     date: DataTypes.DATE,
     amount: DataTypes.DECIMAL(19, 4),
+    type: DataTypes.STRING,
+    typeValue: DataTypes.STRING,
     pointWithdrawalStatusId: DataTypes.INTEGER,
+    description: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'pointWithdrawal',
