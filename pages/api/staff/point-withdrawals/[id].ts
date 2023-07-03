@@ -9,6 +9,8 @@ const User = db.user;
 const Point = db.point;
 const PointHistory = db.pointHistory;
 const PointWithdrawal = db.pointWithdrawal;
+const Balance = db.balance;
+const BalanceHistory = db.balanceHistory;
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,6 +25,7 @@ export default async function handler(
           model: Point,
           include: [{
             model: User,
+            attributes: { exclude: ['password'] },
           }],
         }],
         where: {
@@ -49,6 +52,10 @@ export default async function handler(
       const pointWithdrawal = await PointWithdrawal.findOne({
         include: [{
           model: Point,
+          include: [{
+            model: User,
+            attributes: { exclude: ['password'] },
+          }],
         }],
         where: {
           id: req.query.id,
@@ -57,10 +64,35 @@ export default async function handler(
       if (!pointWithdrawal) return baseResponse.error(res, 400, `Point withdrawal with id ${req.query.id} is not exists`);
       if (pointWithdrawal.pointWithdrawalStatusId !== 0) return baseResponse.error(res, 400, `Point withdrawal with id ${req.query.id} is already verified or rejected`);
 
+      const balance = await Balance.findOne({
+        where: {
+          id: 1,
+        },
+      });
+      if (!balance) return baseResponse.error(res, 404, 'Balance not found');
+      if ((body.pointWithdrawalStatusId === 1) && (Number(balance.amount) < Number(pointWithdrawal.amount))) return baseResponse.error(res, 400, 'Current balance is not enough');
+
       pointWithdrawal.set(body);
       await pointWithdrawal.save();
 
-      if (body.pointWithdrawalStatusId === -1) {
+      if (body.pointWithdrawalStatusId === 1) {
+        await Balance.update({
+          amount: Number(balance.amount) - Number(pointWithdrawal.amount),
+        }, {
+          where: {
+            id: 1,
+          },
+        });
+        await BalanceHistory.create({
+          balanceId: 1,
+          date: new Date(),
+          type: 'debit',
+          description: `Point Withdrawal with id ${pointWithdrawal.id}`,
+          amount: Number(pointWithdrawal.amount),
+          startBalance: Number(balance.amount),
+          currentBalance: Number(balance.amount) - Number(pointWithdrawal.amount),
+        });
+      } else if (body.pointWithdrawalStatusId === -1) {
         await Point.update({
           amount: Number(pointWithdrawal.point.amount) + Number(pointWithdrawal.amount),
         }, {

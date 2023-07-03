@@ -70,3 +70,8 @@ export interface IStaffUpdatePointWithdrawalData {
   pointWithdrawalStatusId: number,
   description?: string,
 }
+
+export interface IStaffUpdateBalanceData {
+  amount: number,
+  description?: string,
+}

@@ -31,8 +31,8 @@ export default function App(): JSX.Element {
           ...pointWithdrawal,
         }));
         const sortedTurncatedResponseData = turncatedResponseData.sort((a: any, b: any) => {
-          if (a.createdAt > b.createdAt) return 1;
-          if (a.createdAt < b.createdAt) return -1;
+          if (a.createdAt > b.createdAt) return -1;
+          if (a.createdAt < b.createdAt) return 1;
           return 0;
         });
         setPointWithdrawals(sortedTurncatedResponseData);
@@ -59,8 +59,8 @@ export default function App(): JSX.Element {
             ...pointWithdrawal,
           }));
           const sortedTurncatedResponseData = turncatedResponseData.sort((a: any, b: any) => {
-            if (a.date > b.date) return 1;
-            if (a.date < b.date) return -1;
+            if (a.date > b.date) return -1;
+            if (a.date < b.date) return 1;
             return 0;
           });
           setPointWithdrawals(sortedTurncatedResponseData);

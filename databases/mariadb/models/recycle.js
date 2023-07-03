@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       recycle.belongsTo(models.user);
       recycle.belongsTo(models.recycleStatus);
       recycle.hasOne(models.pointHistory);
-      recycle.hasOne(models.balanceHistory);
       // recycle.driverId -> user.id
       recycle.belongsTo(models.user, {
         as: 'driver',

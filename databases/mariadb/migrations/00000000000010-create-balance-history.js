@@ -17,14 +17,6 @@ module.exports = {
         onDelete: 'SET NULL',
         onUpdate: 'CASCADE',
       },
-      recycleId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'recycles',
-        },
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
-      },
       date: {
         type: Sequelize.DATE,
       },

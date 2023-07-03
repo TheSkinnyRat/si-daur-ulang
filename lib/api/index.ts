@@ -324,4 +324,25 @@ export const staffGetBalance = async (accessToken: string) => {
   return response.data;
 };
 
+export const staffUpdateBalance = async (
+  accessToken: string,
+  data: I.IStaffUpdateBalanceData,
+) => {
+  const response = await axios.patch(ENDPOINTS.STAFF_BALANCE, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetBalanceHistories = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_BALANCE_HISTORIES, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
 export * from './interfaces';

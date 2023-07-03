@@ -6,11 +6,13 @@ import CardRecyclesRequest from '@/components/organisms/staff/CardRecyclesReques
 import CardRecyclesAccepted from '@/components/organisms/staff/CardRecyclesAccepted';
 import CardRecyclesVerified from '@/components/organisms/staff/CardRecyclesVerified';
 import CardRecyclesView from '@/components/organisms/staff/CardRecyclesView';
+import CardRecyclesReport from '@/components/organisms/staff/CardRecyclesReport';
 import CardPointWithdrawalsRequest from '@/components/organisms/staff/CardPointWithdrawalsRequest';
 import CardPointWithdrawalsView from '@/components/organisms/staff/CardPointWithdrawalsView';
 import CardPointWithdrawalsHistory from '@/components/organisms/staff/CardPointWithdrawalsHistory';
 import CardBalance from '@/components/organisms/staff/CardBalance';
 import CardBalanceForm from '@/components/organisms/staff/CardBalanceForm';
+import CardBalanceHistories from '@/components/organisms/staff/CardBalanceHistories';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -37,6 +39,9 @@ export default function App({ content, query }: IProps): JSX.Element {
     if (content === 'recyclesView') {
       return <CardRecyclesView query={query} />;
     }
+    if (content === 'recyclesReport') {
+      return <CardRecyclesReport />;
+    }
     if (content === 'pointWithdrawalsRequest') {
       return <CardPointWithdrawalsRequest />;
     }
@@ -51,6 +56,9 @@ export default function App({ content, query }: IProps): JSX.Element {
     }
     if (content === 'balanceAdd') {
       return <CardBalanceForm />;
+    }
+    if (content === 'balanceHistories') {
+      return <CardBalanceHistories />;
     }
     return null;
   };

@@ -25,6 +25,7 @@ const ENDPOINTS = {
   STAFF_POINT_WITHDRAWALS_REQUEST: `${CONFIG.BASE_URL}/staff/point-withdrawals/request`,
   STAFF_POINT_WITHDRAWALS_HISTORY: `${CONFIG.BASE_URL}/staff/point-withdrawals/history`,
   STAFF_BALANCE: `${CONFIG.BASE_URL}/staff/balance`,
+  STAFF_BALANCE_HISTORIES: `${CONFIG.BASE_URL}/staff/balance/histories`,
 };
 
 export default ENDPOINTS;

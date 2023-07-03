@@ -13,12 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       balanceHistory.belongsTo(models.balance);
-      balanceHistory.belongsTo(models.recycle);
     }
   }
   balanceHistory.init({
     balanceId: DataTypes.INTEGER,
-    recycleId: DataTypes.INTEGER,
     date: DataTypes.DATE,
     type: DataTypes.STRING,
     description: DataTypes.TEXT,

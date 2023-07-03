@@ -20,8 +20,8 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
             「 SI Daur Ulang 」
           </Link>
         </div>
-        <div className="grow flex min-h-0 mx-auto">
-          <div className="overflow-auto">
+        <div className="grow flex min-h-0">
+          <div className="grow overflow-auto">
             <div className="block">
               <div className="p-3 text-sm font-bold text-slate-500 dark:text-zinc-400">
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />

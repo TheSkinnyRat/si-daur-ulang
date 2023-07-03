@@ -68,6 +68,16 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                     <span className="grow transition-none">Completed</span>
                   </div>
                 </LinkSideBar>
+                <LinkSideBar
+                  href="/staff/recycles/report"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('recycles/report')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-recycle transition-none" />
+                    <span className="grow transition-none">Report</span>
+                  </div>
+                </LinkSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
                 <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">POINT WITHDRAWAL</div>
                 <LinkSideBar
@@ -100,6 +110,16 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-wallet transition-none" />
                     <span className="grow transition-none">Balance</span>
+                  </div>
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/staff/balance/histories"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('balance/histories')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-wallet transition-none" />
+                    <span className="grow transition-none">History</span>
                   </div>
                 </LinkSideBar>
               </div>
