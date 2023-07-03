@@ -24,6 +24,10 @@ export default async function handler(
           model: User,
           as: 'user',
           attributes: { exclude: ['password'] },
+        }, {
+          model: User,
+          as: 'driver',
+          attributes: { exclude: ['password'] },
         }],
         where: {
           recycleStatusId: {

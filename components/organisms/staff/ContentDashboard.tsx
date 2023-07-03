@@ -10,9 +10,11 @@ import CardRecyclesReport from '@/components/organisms/staff/CardRecyclesReport'
 import CardPointWithdrawalsRequest from '@/components/organisms/staff/CardPointWithdrawalsRequest';
 import CardPointWithdrawalsView from '@/components/organisms/staff/CardPointWithdrawalsView';
 import CardPointWithdrawalsHistory from '@/components/organisms/staff/CardPointWithdrawalsHistory';
+import CardPointWithdrawalsReport from '@/components/organisms/staff/CardPointWithdrawalsReport';
 import CardBalance from '@/components/organisms/staff/CardBalance';
 import CardBalanceForm from '@/components/organisms/staff/CardBalanceForm';
 import CardBalanceHistories from '@/components/organisms/staff/CardBalanceHistories';
+import CardBalanceReport from '@/components/organisms/staff/CardBalanceReport';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -51,6 +53,9 @@ export default function App({ content, query }: IProps): JSX.Element {
     if (content === 'pointWithdrawalsHistory') {
       return <CardPointWithdrawalsHistory />;
     }
+    if (content === 'pointWithdrawalsReport') {
+      return <CardPointWithdrawalsReport />;
+    }
     if (content === 'balance') {
       return <CardBalance />;
     }
@@ -59,6 +64,9 @@ export default function App({ content, query }: IProps): JSX.Element {
     }
     if (content === 'balanceHistories') {
       return <CardBalanceHistories />;
+    }
+    if (content === 'balanceReport') {
+      return <CardBalanceReport />;
     }
     return null;
   };

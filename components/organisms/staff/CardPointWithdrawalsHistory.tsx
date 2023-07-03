@@ -104,7 +104,7 @@ export default function App(): JSX.Element {
             'Amount',
             'Withdraw To',
             'No. Telp / VA / Rek',
-            'description',
+            'Description',
             'Withdrawal Status',
           ]}
           datas={pointWithdrawals}

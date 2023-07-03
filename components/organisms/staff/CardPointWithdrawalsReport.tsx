@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import DataTable from '@/components/atoms/DataTable';
 import Button from '@/components/atoms/Button';
 import {
-  staffGetRecyclesVerified,
+  staffGetPointWithdrawalsHistory,
 } from '@/lib/api';
 import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -14,10 +14,10 @@ export default function App(): JSX.Element {
     required: true,
   });
   const [alert, setAlert] = useState<IAlertProps>({
-    message: 'Recycles report',
+    message: 'Point withdrawals report',
     isLoading: false,
   });
-  const [recyclesReport, setRecyclesReport] = useState([]);
+  const [pointWithdrawalReport, setPointWithdrawalReport] = useState([]);
   const [inputValue, setInputValue] = useState<{
     dateMin: string;
     dateMax: string;
@@ -27,26 +27,28 @@ export default function App(): JSX.Element {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const formGetRecyclesReportHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const formGetPointWithdrawalReportHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setAlert({
       type: 'info',
-      message: 'Getting verified recycles report ...',
+      message: 'Getting point withdrawals report',
       isLoading: true,
     });
     try {
-      const response = await staffGetRecyclesVerified(session?.user.accessToken as string);
+      const response = await staffGetPointWithdrawalsHistory(session?.user.accessToken as string);
       if (response.success) {
-        const turncatedResponseData = response.success.data.map((recycle: any) => ({
-          ...recycle,
+        const turncatedResponseData = response.success.data.map((pointWithdrawal: any) => ({
+          ...pointWithdrawal,
         }));
-        const filteredTurncatedResponseData = turncatedResponseData.filter((recycle: any) => {
-          const dateMin = new Date(inputValue.dateMin);
-          const dateMax = new Date(inputValue.dateMax);
-          const recycleDate = new Date(recycle.createdAt);
-          return recycleDate >= dateMin && recycleDate <= dateMax;
-        });
+        const filteredTurncatedResponseData = turncatedResponseData.filter(
+          (pointWithdrawal: any) => {
+            const dateMin = new Date(inputValue.dateMin);
+            const dateMax = new Date(inputValue.dateMax);
+            const recycleDate = new Date(pointWithdrawal.createdAt);
+            return recycleDate >= dateMin && recycleDate <= dateMax;
+          },
+        );
         const sortedFilteredTurncatedResponseData = filteredTurncatedResponseData.sort(
           (a: any, b: any) => {
             if (a.createdAt > b.createdAt) return 1;
@@ -54,9 +56,9 @@ export default function App(): JSX.Element {
             return 0;
           },
         );
-        setRecyclesReport(sortedFilteredTurncatedResponseData);
+        setPointWithdrawalReport(sortedFilteredTurncatedResponseData);
         setAlert({
-          message: `Total verified recycles: ${sortedFilteredTurncatedResponseData.length}`,
+          message: `Total point withdrawals: ${sortedFilteredTurncatedResponseData.length}`,
         });
       }
     } catch (error: any) {
@@ -75,7 +77,7 @@ export default function App(): JSX.Element {
     doc.setFontSize(15);
     doc.text('SI Daur Ulang', 14, 10);
     doc.setFontSize(15);
-    doc.text('Recycles Report', 14, 17);
+    doc.text('Point Withdrawal Report', 14, 17);
     doc.setFontSize(10);
     doc.text(`From ${inputValue.dateMin} to ${inputValue.dateMax}`, 14, 22);
 
@@ -84,39 +86,31 @@ export default function App(): JSX.Element {
       head: [[
         'ID',
         'Date',
-        'Type',
-        'Weight (kg)',
-        'Delivered By',
         'Requester',
-        // 'Address',
-        'Actual Type',
-        'Actual Weight',
-        'Actual Point',
-        'Recycle Status',
+        'amount',
+        'Withdraw To',
+        'No. Telp / VA / Rek',
+        'Description',
+        'Withdrawal Status',
       ]],
-      body: recyclesReport.map((recycle: any) => [
-        recycle.id,
-        new Date(recycle?.createdAt).toLocaleString(),
-        recycle?.type,
-        recycle?.weight,
-        recycle?.selfDelivery ? 'Self Delivery' : `Driver: ${recycle?.driver?.name}`,
-        recycle?.user?.name,
-        // recycle?.user?.address,
-        recycle?.actualType,
-        recycle?.actualWeight,
-        recycle?.actualPoint ? Number(recycle.actualPoint.split('.')[0])?.toLocaleString('id-ID') : undefined,
+      body: pointWithdrawalReport.map((pointWithdrawal: any) => [
+        pointWithdrawal.id,
+        new Date(pointWithdrawal?.date).toLocaleString(),
+        pointWithdrawal?.point?.user?.name,
+        pointWithdrawal?.amount ? Number(pointWithdrawal.amount.split('.')[0])?.toLocaleString('id-ID') : undefined,
+        pointWithdrawal?.type,
+        pointWithdrawal?.typeValue,
+        pointWithdrawal?.description ?? '-',
         (() => {
-          if (recycle?.recycleStatusId === 0) return 'Requested';
-          if (recycle?.recycleStatusId === 1) return 'Driver Pickup';
-          if (recycle?.recycleStatusId === 2) return 'Driver Delivery';
-          if (recycle?.recycleStatusId === 3) return 'Accepted';
-          if (recycle?.recycleStatusId === 4) return 'Completed';
+          if (pointWithdrawal?.pointWithdrawalStatusId === -1) return 'Rejected';
+          if (pointWithdrawal?.pointWithdrawalStatusId === 0) return 'Requested';
+          if (pointWithdrawal?.pointWithdrawalStatusId === 1) return 'Completed';
           return '-';
         })(),
       ]),
     });
 
-    doc.save(`recycles-report-${inputValue.dateMin.split('-').join('')}-${inputValue.dateMax.split('-').join('')}.pdf`);
+    doc.save(`point-withdrawals-report-${inputValue.dateMin.split('-').join('')}-${inputValue.dateMax.split('-').join('')}.pdf`);
   };
 
   return (
@@ -125,7 +119,7 @@ export default function App(): JSX.Element {
         <div className="px-4 py-3 text-xs text-slate-700 uppercase font-bold bg-slate-100 dark:bg-zinc-700 dark:text-zinc-300">
           <Alert type={alert.type} message={alert.message} isLoading={alert.isLoading} />
         </div>
-        <form className="grid grid-cols-none md:grid-cols-12 gap-x-3 gap-y-1 m-3" onSubmit={formGetRecyclesReportHandler}>
+        <form className="grid grid-cols-none md:grid-cols-12 gap-x-3 gap-y-1 m-3" onSubmit={formGetPointWithdrawalReportHandler}>
           <label className="block col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="dateMin">
             <span className="text-slate-700 dark:text-slate-200">Date After</span>
             <input
@@ -161,7 +155,7 @@ export default function App(): JSX.Element {
             </Button>
           </div>
         </form>
-        {recyclesReport.length > 0 && (
+        {pointWithdrawalReport.length > 0 && (
           <>
             <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
             <Button
@@ -179,45 +173,43 @@ export default function App(): JSX.Element {
               headers={[
                 'ID',
                 'Date',
-                'Type',
-                'Weight (kg)',
                 'Requester',
-                'Address',
-                'Recycle Status',
+                'amount',
+                'Withdraw To',
+                'No. Telp / VA / Rek',
+                'Description',
+                'Withdrawal Status',
               ]}
-              datas={recyclesReport}
+              datas={pointWithdrawalReport}
               dataKey="id"
               dataMappings={{
                 id: 'id',
-                date: 'createdAt',
+                date: 'date',
+                requester: 'point.user.name',
+                amount: 'amount',
                 type: 'type',
-                weight: 'weight',
-                requester: 'user.name',
-                address: 'user.address',
-                recycleStatusId: 'recycleStatusId',
+                typeValue: 'typeValue',
+                description: 'description',
+                pointWithdrawalStatusId: 'pointWithdrawalStatusId',
               }}
               dataConditionalValue={{
-                date: (data: any) => new Date(data).toLocaleString(),
-                recycleStatusId: (data: any) => {
+                date: (data: any) => new Date(data).toLocaleString('id-ID'),
+                amount: (data: any) => Number(data.split('.')[0]).toLocaleString('id-ID'),
+                pointWithdrawalStatusId: (data: any) => {
+                  if (data === -1) return 'Rejected';
                   if (data === 0) return 'Requested';
-                  if (data === 1) return 'Driver Pickup';
-                  if (data === 2) return 'Driver Delivery';
-                  if (data === 3) return 'Accepted';
-                  if (data === 4) return 'Completed';
+                  if (data === 1) return 'Completed';
                   return data;
                 },
               }}
               dataConditionalClassName={{
-                recycleStatusId: (data: any) => {
-                  if (data === 1) return 'text-yellow-500';
-                  if (data === 2) return 'text-cyan-500';
-                  if (data === 3) return 'text-blue-500';
-                  if (data === 4) return 'text-green-500';
+                pointWithdrawalStatusId: (data: any) => {
+                  if (data === -1) return 'text-red-500';
+                  if (data === 1) return 'text-green-500';
                   return '';
                 },
               }}
             />
-
           </>
         )}
       </div>

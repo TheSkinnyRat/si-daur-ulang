@@ -100,6 +100,16 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                     <span className="grow transition-none">History</span>
                   </div>
                 </LinkSideBar>
+                <LinkSideBar
+                  href="/staff/point-withdrawals/report"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('point-withdrawals/report')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-money-bills transition-none" />
+                    <span className="grow transition-none">Report</span>
+                  </div>
+                </LinkSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
                 <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">BALANCE</div>
                 <LinkSideBar
@@ -120,6 +130,16 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-wallet transition-none" />
                     <span className="grow transition-none">History</span>
+                  </div>
+                </LinkSideBar>
+                <LinkSideBar
+                  href="/staff/balance/report"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.endsWith('balance/report')}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-wallet transition-none" />
+                    <span className="grow transition-none">Report</span>
                   </div>
                 </LinkSideBar>
               </div>

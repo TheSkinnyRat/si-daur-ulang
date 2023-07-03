@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import DataTable from '@/components/atoms/DataTable';
 import Button from '@/components/atoms/Button';
 import {
-  staffGetRecyclesVerified,
+  staffGetBalanceHistories,
 } from '@/lib/api';
 import JsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -14,10 +14,10 @@ export default function App(): JSX.Element {
     required: true,
   });
   const [alert, setAlert] = useState<IAlertProps>({
-    message: 'Recycles report',
+    message: 'Balance report',
     isLoading: false,
   });
-  const [recyclesReport, setRecyclesReport] = useState([]);
+  const [balanceReport, setBalanceReport] = useState([]);
   const [inputValue, setInputValue] = useState<{
     dateMin: string;
     dateMax: string;
@@ -27,26 +27,28 @@ export default function App(): JSX.Element {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const formGetRecyclesReportHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const formGetBalanceReportHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setAlert({
       type: 'info',
-      message: 'Getting verified recycles report ...',
+      message: 'Getting balance report',
       isLoading: true,
     });
     try {
-      const response = await staffGetRecyclesVerified(session?.user.accessToken as string);
+      const response = await staffGetBalanceHistories(session?.user.accessToken as string);
       if (response.success) {
-        const turncatedResponseData = response.success.data.map((recycle: any) => ({
-          ...recycle,
+        const turncatedResponseData = response.success.data.map((balance: any) => ({
+          ...balance,
         }));
-        const filteredTurncatedResponseData = turncatedResponseData.filter((recycle: any) => {
-          const dateMin = new Date(inputValue.dateMin);
-          const dateMax = new Date(inputValue.dateMax);
-          const recycleDate = new Date(recycle.createdAt);
-          return recycleDate >= dateMin && recycleDate <= dateMax;
-        });
+        const filteredTurncatedResponseData = turncatedResponseData.filter(
+          (balance: any) => {
+            const dateMin = new Date(inputValue.dateMin);
+            const dateMax = new Date(inputValue.dateMax);
+            const recycleDate = new Date(balance.createdAt);
+            return recycleDate >= dateMin && recycleDate <= dateMax;
+          },
+        );
         const sortedFilteredTurncatedResponseData = filteredTurncatedResponseData.sort(
           (a: any, b: any) => {
             if (a.createdAt > b.createdAt) return 1;
@@ -54,9 +56,9 @@ export default function App(): JSX.Element {
             return 0;
           },
         );
-        setRecyclesReport(sortedFilteredTurncatedResponseData);
+        setBalanceReport(sortedFilteredTurncatedResponseData);
         setAlert({
-          message: `Total verified recycles: ${sortedFilteredTurncatedResponseData.length}`,
+          message: `Total balance: ${sortedFilteredTurncatedResponseData.length}`,
         });
       }
     } catch (error: any) {
@@ -75,7 +77,7 @@ export default function App(): JSX.Element {
     doc.setFontSize(15);
     doc.text('SI Daur Ulang', 14, 10);
     doc.setFontSize(15);
-    doc.text('Recycles Report', 14, 17);
+    doc.text('Balance Report', 14, 17);
     doc.setFontSize(10);
     doc.text(`From ${inputValue.dateMin} to ${inputValue.dateMax}`, 14, 22);
 
@@ -85,38 +87,23 @@ export default function App(): JSX.Element {
         'ID',
         'Date',
         'Type',
-        'Weight (kg)',
-        'Delivered By',
-        'Requester',
-        // 'Address',
-        'Actual Type',
-        'Actual Weight',
-        'Actual Point',
-        'Recycle Status',
+        'Amount',
+        'Description',
+        'Start Balance',
+        'Current Balance',
       ]],
-      body: recyclesReport.map((recycle: any) => [
-        recycle.id,
-        new Date(recycle?.createdAt).toLocaleString(),
-        recycle?.type,
-        recycle?.weight,
-        recycle?.selfDelivery ? 'Self Delivery' : `Driver: ${recycle?.driver?.name}`,
-        recycle?.user?.name,
-        // recycle?.user?.address,
-        recycle?.actualType,
-        recycle?.actualWeight,
-        recycle?.actualPoint ? Number(recycle.actualPoint.split('.')[0])?.toLocaleString('id-ID') : undefined,
-        (() => {
-          if (recycle?.recycleStatusId === 0) return 'Requested';
-          if (recycle?.recycleStatusId === 1) return 'Driver Pickup';
-          if (recycle?.recycleStatusId === 2) return 'Driver Delivery';
-          if (recycle?.recycleStatusId === 3) return 'Accepted';
-          if (recycle?.recycleStatusId === 4) return 'Completed';
-          return '-';
-        })(),
+      body: balanceReport.map((balance: any) => [
+        balance.id,
+        new Date(balance?.date).toLocaleString(),
+        balance?.type,
+        balance?.amount ? `${balance?.type === 'credit' ? '+' : '-'}${Number(balance.amount.split('.')[0])?.toLocaleString('id-ID')}` : undefined,
+        balance?.description,
+        balance?.startBalance ? Number(balance.startBalance.split('.')[0])?.toLocaleString('id-ID') : undefined,
+        balance?.currentBalance ? Number(balance.currentBalance.split('.')[0])?.toLocaleString('id-ID') : undefined,
       ]),
     });
 
-    doc.save(`recycles-report-${inputValue.dateMin.split('-').join('')}-${inputValue.dateMax.split('-').join('')}.pdf`);
+    doc.save(`balance-report-${inputValue.dateMin.split('-').join('')}-${inputValue.dateMax.split('-').join('')}.pdf`);
   };
 
   return (
@@ -125,7 +112,7 @@ export default function App(): JSX.Element {
         <div className="px-4 py-3 text-xs text-slate-700 uppercase font-bold bg-slate-100 dark:bg-zinc-700 dark:text-zinc-300">
           <Alert type={alert.type} message={alert.message} isLoading={alert.isLoading} />
         </div>
-        <form className="grid grid-cols-none md:grid-cols-12 gap-x-3 gap-y-1 m-3" onSubmit={formGetRecyclesReportHandler}>
+        <form className="grid grid-cols-none md:grid-cols-12 gap-x-3 gap-y-1 m-3" onSubmit={formGetBalanceReportHandler}>
           <label className="block col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="dateMin">
             <span className="text-slate-700 dark:text-slate-200">Date After</span>
             <input
@@ -161,7 +148,7 @@ export default function App(): JSX.Element {
             </Button>
           </div>
         </form>
-        {recyclesReport.length > 0 && (
+        {balanceReport.length > 0 && (
           <>
             <hr className="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700" />
             <Button
@@ -180,44 +167,36 @@ export default function App(): JSX.Element {
                 'ID',
                 'Date',
                 'Type',
-                'Weight (kg)',
-                'Requester',
-                'Address',
-                'Recycle Status',
+                'Amount',
+                'Description',
+                'Start Balance',
+                'Current Balance',
               ]}
-              datas={recyclesReport}
+              datas={balanceReport}
               dataKey="id"
               dataMappings={{
                 id: 'id',
-                date: 'createdAt',
+                date: 'date',
                 type: 'type',
-                weight: 'weight',
-                requester: 'user.name',
-                address: 'user.address',
-                recycleStatusId: 'recycleStatusId',
+                amount: 'amount',
+                description: 'description',
+                startBalance: 'startBalance',
+                currentBalance: 'currentBalance',
               }}
               dataConditionalValue={{
                 date: (data: any) => new Date(data).toLocaleString(),
-                recycleStatusId: (data: any) => {
-                  if (data === 0) return 'Requested';
-                  if (data === 1) return 'Driver Pickup';
-                  if (data === 2) return 'Driver Delivery';
-                  if (data === 3) return 'Accepted';
-                  if (data === 4) return 'Completed';
-                  return data;
-                },
+                amount: (data: any) => Number(data.split('.')[0]).toLocaleString('id-ID'),
+                startBalance: (data: any) => Number(data.split('.')[0]).toLocaleString('id-ID'),
+                currentBalance: (data: any) => Number(data.split('.')[0]).toLocaleString('id-ID'),
               }}
               dataConditionalClassName={{
-                recycleStatusId: (data: any) => {
-                  if (data === 1) return 'text-yellow-500';
-                  if (data === 2) return 'text-cyan-500';
-                  if (data === 3) return 'text-blue-500';
-                  if (data === 4) return 'text-green-500';
+                type: (data: any) => {
+                  if (data === 'debit') return 'text-red-500';
+                  if (data === 'credit') return 'text-green-500';
                   return '';
                 },
               }}
             />
-
           </>
         )}
       </div>
