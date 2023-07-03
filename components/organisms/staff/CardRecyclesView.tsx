@@ -147,32 +147,64 @@ export default function App({ query }: IProps): JSX.Element {
         <div className="px-4 py-3 text-xs text-slate-700 uppercase font-bold bg-slate-100 dark:bg-zinc-700 dark:text-zinc-300">
           <Alert type={alert.type} message={alert.message} isLoading={alert.isLoading} />
         </div>
-        <div className="grid grid-cols-12 m-3">
-          <div className="block rounded-md rounded-r-none col-span-6 md:col-span-6 lg:col-span-5 xl:col-span-4 bg-slate-200 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Trash Type</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Weight</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Delivery</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Actual Type</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Actual Weight</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Actual Point</div>
-            <div className="py-1 px-2">Recycle Status</div>
+        <div className="grid grid-cols-12 gap-0.5 m-3">
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Trash Type
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              {recycle?.type ?? '-'}
+            </div>
           </div>
-          <div className="block rounded-md rounded-l-none col-span-6 md:col-span-6 lg:col-span-5 xl:col-span-4 bg-slate-100 dark:bg-zinc-700 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">{recycle?.type ?? '-'}</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Weight
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
               {recycle?.weight ?? '-'}
               {' '}
               kg
             </div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">{recycle?.selfDelivery ? 'Self Delivery' : 'Driver Pickup'}</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">{recycle?.actualType ?? '-'}</div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">
+          </div>
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Delivery
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              {recycle?.selfDelivery ? 'Self Delivery' : 'Driver Pickup'}
+            </div>
+          </div>
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Actual Type
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              {recycle?.actualType ?? '-'}
+            </div>
+          </div>
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Actual Weight
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
               {recycle?.actualWeight ?? '-'}
               {' '}
               kg
             </div>
-            <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">{recycle?.actualPoint?.split('.')[0] ?? '-'}</div>
-            <div className="py-1 px-2 font-semibold">
+          </div>
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Actual Point
+            </div>
+            <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              {recycle?.actualPoint ? Number(recycle.actualPoint.split('.')[0])?.toLocaleString('id-ID') : '-'}
+            </div>
+          </div>
+          <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+            <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+              Recycle Status
+            </div>
+            <div className="flex-1 py-1 px-2 font-semibold rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
               {recycle?.recycleStatusId === 0 && (
               <span className="">Requested</span>
               )}
@@ -192,14 +224,22 @@ export default function App({ query }: IProps): JSX.Element {
           </div>
         </div>
         {recycle?.driver && (
-          <div className="grid grid-cols-12 m-3">
-            <div className="block rounded-md rounded-r-none col-span-6 md:col-span-6 lg:col-span-5 xl:col-span-4 bg-slate-200 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
-              <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">Driver Name</div>
-              <div className="py-1 px-2">Driver Telp</div>
+          <div className="grid grid-cols-12 gap-0.5 m-3">
+            <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+              <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+                Driver Name
+              </div>
+              <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+                {recycle?.driver?.name ?? '-'}
+              </div>
             </div>
-            <div className="block rounded-md rounded-l-none col-span-6 md:col-span-6 lg:col-span-5 xl:col-span-4 bg-slate-100 dark:bg-zinc-700 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
-              <div className="py-1 px-2 border-b border-slate-300 dark:border-zinc-600">{recycle?.driver?.name ?? '-'}</div>
-              <div className="py-1 px-2">{recycle?.driver?.phone ?? '-'}</div>
+            <div className="flex col-span-12 lg:col-span-10 xl:col-span-8">
+              <div className="flex-1 py-1 px-2 rounded-md rounded-r-none bg-slate-300 dark:bg-zinc-600 bg-opacity-75 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+                Driver Telp
+              </div>
+              <div className="flex-1 py-1 px-2 rounded-md rounded-l-none bg-slate-300 dark:bg-zinc-700 bg-opacity-50 dark:bg-opacity-40 text-slate-700 dark:text-slate-200">
+                {recycle?.driver?.phone ?? '-'}
+              </div>
             </div>
           </div>
         )}

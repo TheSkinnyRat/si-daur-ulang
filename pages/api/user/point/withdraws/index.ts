@@ -67,11 +67,11 @@ export default async function handler(
         type: 'debit',
         description: 'Withdrawal',
         amount: body.amount,
-        startPoint: point.amount,
-        currentPoint: point.amount - body.amount,
+        startPoint: Number(point.amount),
+        currentPoint: Number(point.amount) - body.amount,
       });
 
-      point.amount -= body.amount;
+      point.amount = Number(point.amount) - body.amount;
       await point.save();
 
       return baseResponse.ok(res, { message: 'Withdrawal request has been sent' });

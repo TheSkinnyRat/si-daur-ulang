@@ -275,4 +275,53 @@ export const staffUpdateRecycle = async (
   return response.data;
 };
 
+export const staffGetPointWithdrawalsRequest = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_POINT_WITHDRAWALS_REQUEST, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetPointWithdrawalsHistory = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_POINT_WITHDRAWALS_HISTORY, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetPointWithdrawal = async (accessToken: string, id: number) => {
+  const response = await axios.get(ENDPOINTS.STAFF_POINT_WITHDRAWAL(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffUpdatePointWithdrawal = async (
+  accessToken: string,
+  id: number,
+  data: I.IStaffUpdatePointWithdrawalData,
+) => {
+  const response = await axios.patch(ENDPOINTS.STAFF_POINT_WITHDRAWAL(id), data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const staffGetBalance = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.STAFF_BALANCE, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
 export * from './interfaces';

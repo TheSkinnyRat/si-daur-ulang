@@ -20,6 +20,11 @@ const ENDPOINTS = {
   STAFF_RECYCLES_REQUEST: `${CONFIG.BASE_URL}/staff/recycles/request`,
   STAFF_RECYCLES_ACCEPTED: `${CONFIG.BASE_URL}/staff/recycles/accepted`,
   STAFF_RECYCLES_VERIFIED: `${CONFIG.BASE_URL}/staff/recycles/verified`,
+  STAFF_POINT_WITHDRAWALS: `${CONFIG.BASE_URL}/staff/point-withdrawals`,
+  STAFF_POINT_WITHDRAWAL: (id: number) => `${CONFIG.BASE_URL}/staff/point-withdrawals/${id}`,
+  STAFF_POINT_WITHDRAWALS_REQUEST: `${CONFIG.BASE_URL}/staff/point-withdrawals/request`,
+  STAFF_POINT_WITHDRAWALS_HISTORY: `${CONFIG.BASE_URL}/staff/point-withdrawals/history`,
+  STAFF_BALANCE: `${CONFIG.BASE_URL}/staff/balance`,
 };
 
 export default ENDPOINTS;
