@@ -9,6 +9,9 @@ import CardPoint from '@/components/organisms/user/CardPoint';
 import CardPointHistories from '@/components/organisms/user/CardPointHistories';
 import CardPointWithdraws from '@/components/organisms/user/CardPointWithdraws';
 import CardPointWithdrawsForm from '@/components/organisms/user/CardPointWithdrawsForm';
+import CardQuestions from '@/components/organisms/user/CardQuestions';
+import CardQuestionsForm from '@/components/organisms/user/CardQuestionsForm';
+import CardQuestionsView from '@/components/organisms/user/CardQuestionsView';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface IProps {
@@ -43,6 +46,15 @@ export default function App({ content, query }: IProps): JSX.Element {
     }
     if (content === 'pointWithdrawsAdd') {
       return <CardPointWithdrawsForm />;
+    }
+    if (content === 'questions') {
+      return <CardQuestions />;
+    }
+    if (content === 'questionsAdd') {
+      return <CardQuestionsForm />;
+    }
+    if (content === 'questionsView') {
+      return <CardQuestionsView query={query} />;
     }
     return null;
   };

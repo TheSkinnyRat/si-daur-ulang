@@ -97,7 +97,7 @@ export default function App(): JSX.Element {
         new Date(balance?.date).toLocaleString(),
         balance?.type,
         balance?.amount ? `${balance?.type === 'credit' ? '+' : '-'}${Number(balance.amount.split('.')[0])?.toLocaleString('id-ID')}` : undefined,
-        balance?.description,
+        balance?.description ?? '-',
         balance?.startBalance ? Number(balance.startBalance.split('.')[0])?.toLocaleString('id-ID') : undefined,
         balance?.currentBalance ? Number(balance.currentBalance.split('.')[0])?.toLocaleString('id-ID') : undefined,
       ]),

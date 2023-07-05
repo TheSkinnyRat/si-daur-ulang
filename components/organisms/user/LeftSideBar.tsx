@@ -37,7 +37,7 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                   </div>
                 </LinkSideBar>
                 <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
-                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">MENU</div>
+                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">RECYCLES</div>
                 <LinkSideBar
                   href="/user/recycles"
                   onClick={() => setIsSideMenuOpen(false)}
@@ -48,6 +48,18 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                     <span className="grow transition-none">Recycles</span>
                   </div>
                 </LinkSideBar>
+                <LinkSideBar
+                  href="/user/questions/add"
+                  onClick={() => setIsSideMenuOpen(false)}
+                  active={router.pathname.split('/')[2] === 'questions'}
+                >
+                  <div className="flex place-items-center gap-1 transition-none">
+                    <i className="fa-fw fa-solid fa-question transition-none" />
+                    <span className="grow transition-none">Question</span>
+                  </div>
+                </LinkSideBar>
+                <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
+                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">POINT</div>
                 <LinkSideBar
                   href="/user/point"
                   onClick={() => setIsSideMenuOpen(false)}
@@ -68,6 +80,8 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                     <span className="grow transition-none">Point History</span>
                   </div>
                 </LinkSideBar>
+                <div className="my-3 w-auto h-0.5 bg-slate-300 dark:bg-zinc-700 rounded-full" />
+                <div className="p-1 mb-1 font-bold text-slate-900 dark:text-zinc-100">WITHDRAW</div>
                 <LinkSideBar
                   href="/user/point/withdraws/add"
                   onClick={() => setIsSideMenuOpen(false)}
@@ -75,7 +89,7 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                 >
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-money-bill-wave transition-none" />
-                    <span className="grow transition-none">Point Withdraw</span>
+                    <span className="grow transition-none">Withdraw Request</span>
                   </div>
                 </LinkSideBar>
                 <LinkSideBar
@@ -85,7 +99,7 @@ export default function App({ isSideMenuOpen, setIsSideMenuOpen }: IProps): JSX.
                 >
                   <div className="flex place-items-center gap-1 transition-none">
                     <i className="fa-fw fa-solid fa-money-bill-wave transition-none" />
-                    <span className="grow transition-none">Point Withdraw History</span>
+                    <span className="grow transition-none">Withdraw History</span>
                   </div>
                 </LinkSideBar>
               </div>

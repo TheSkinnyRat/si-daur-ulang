@@ -19,6 +19,9 @@ namespace NodeJS {
     DB_PASSWORD: string;
     DB_NAME: string;
 
+    // OPENAI
+    OPENAI_API_KEY: string;
+
     // Api Configuration
     NEXT_PUBLIC_API_BASE_URL: string;
 

@@ -13,12 +13,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       chat.belongsTo(models.user);
+      chat.belongsTo(models.chat, {
+        as: 'parent',
+        foreignKey: 'parentId',
+      });
     }
   }
   chat.init({
     userId: DataTypes.INTEGER,
     type: DataTypes.STRING,
     chat: DataTypes.TEXT,
+    parentId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'chat',

@@ -186,6 +186,36 @@ export const userAddPointWithdraw = async (
   return response.data;
 };
 
+export const userAddQuestion = async (
+  accessToken: string,
+  data: I.IUserAddQuestionData,
+) => {
+  const response = await axios.post(ENDPOINTS.USER_QUESTIONS, data, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetQuestions = async (accessToken: string) => {
+  const response = await axios.get(ENDPOINTS.USER_QUESTIONS, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+export const userGetQuestion = async (accessToken: string, id: number) => {
+  const response = await axios.get(ENDPOINTS.USER_QUESTION(id), {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
 export const driverGetRecyclesRequest = async (accessToken: string) => {
   const response = await axios.get(ENDPOINTS.DRIVER_RECYCLES_REQUEST, {
     headers: {
@@ -345,4 +375,5 @@ export const staffGetBalanceHistories = async (accessToken: string) => {
   return response.data;
 };
 
-export * from './interfaces';
+export * from '@lib/api/interfaces';
+export * from '@lib/api/openai';

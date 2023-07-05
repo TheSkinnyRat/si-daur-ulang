@@ -55,6 +55,10 @@ export interface IUserAddPointWithdrawData {
   typeValue: string,
 }
 
+export interface IUserAddQuestionData {
+  question: string,
+}
+
 export interface IDriverUpdateRecycleData {
   recycleStatusId: number,
 }

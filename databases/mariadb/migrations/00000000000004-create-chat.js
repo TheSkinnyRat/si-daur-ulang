@@ -23,6 +23,14 @@ module.exports = {
       chat: {
         type: Sequelize.TEXT,
       },
+      parentId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'chats',
+        },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

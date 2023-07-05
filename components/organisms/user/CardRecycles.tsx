@@ -134,7 +134,7 @@ export default function App(): JSX.Element {
               if (data === true) return 'Self Delivery';
               return 'Driver';
             },
-            actualPoint: (data: any) => data.split('.')[0],
+            actualPoint: (data: any) => (data === '-' ? '-' : Number(data.split('.')[0]).toLocaleString('id-ID')),
             recycleStatusId: (data: any) => {
               if (data === 0) return 'Requested';
               if (data === 1) return 'Driver Pickup';

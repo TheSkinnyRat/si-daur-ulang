@@ -11,6 +11,8 @@ const ENDPOINTS = {
   USER_POINT: `${CONFIG.BASE_URL}/user/point`,
   USER_POINT_HISTORIES: `${CONFIG.BASE_URL}/user/point/histories`,
   USER_POINT_WITHDRAWS: `${CONFIG.BASE_URL}/user/point/withdraws`,
+  USER_QUESTIONS: `${CONFIG.BASE_URL}/user/questions`,
+  USER_QUESTION: (id: number) => `${CONFIG.BASE_URL}/user/questions/${id}`,
   DRIVER_RECYCLES_REQUEST: `${CONFIG.BASE_URL}/driver/recycles/request`,
   DRIVER_RECYCLES_PICKUP: `${CONFIG.BASE_URL}/driver/recycles/pickup`,
   DRIVER_RECYCLES_PICKED: `${CONFIG.BASE_URL}/driver/recycles/picked`,
