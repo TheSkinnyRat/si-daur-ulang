@@ -75,6 +75,13 @@ export default async function handler(
         });
         if (userCheckIdCard) return baseResponse.error(res, 400, 'Id Card (KTP) already exists');
       }
+      if (userCheckExists.id === 1
+          || userCheckExists.id === 2
+          || userCheckExists.id === 3
+          || userCheckExists.id === 4
+      ) {
+        return baseResponse.error(res, 400, 'Cannot update demo user');
+      }
 
       if (body.password) body.password = hashPassword(body.password);
       await User.update(body, {
@@ -104,6 +111,13 @@ export default async function handler(
         },
       });
       if (!userCheckExists) return baseResponse.error(res, 400, `User with id ${req.query.id} is not exists`);
+      if (userCheckExists.id === 1
+        || userCheckExists.id === 2
+        || userCheckExists.id === 3
+        || userCheckExists.id === 4
+      ) {
+        return baseResponse.error(res, 400, 'Cannot delete demo user');
+      }
 
       await User.destroy({
         where: {
