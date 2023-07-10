@@ -270,7 +270,7 @@ export default function App({ query }: IProps): JSX.Element {
               <option value="0">Admin</option>
               <option value="1">Staff</option>
               <option value="2">Driver</option>
-              <option value="3">User</option>
+              <option value="3">Warga</option>
             </select>
           </label>
           <div className="mt-2 md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-3 lg:col-span-2 xl:col-span-1">
