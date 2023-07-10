@@ -6,10 +6,12 @@ namespace NodeJS {
 
     // APP
     APP_KEY: string;
+    APP_PORT: string;
     APP_TIMEZONE_STRING: string;
     APP_TIMEZONE_CODE: string;
     APP_SESSION_TIME: string;
     APP_ROUND_SALT: string;
+    APP_API_BASE_URL: string;
 
     // DATABASE
     DB_HOST: string;
