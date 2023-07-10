@@ -12,7 +12,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const user = await roleCheck(req.headers['x-jwt-payload'] as string, 'user', res);
+  const user = await roleCheck(res.getHeader('x-jwt-payload') as string, 'user', res);
   if (!user) return undefined;
   if (req.method === 'GET') {
     try {

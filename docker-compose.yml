@@ -1,0 +1,37 @@
+version: '3'
+services:
+  app-si-daur-ulang:
+    container_name: app-si-daur-ulang
+    image: si-daur-ulang
+    restart: always
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    networks:
+      - net-si-daur-ulang
+
+  mariadb:
+    container_name: db-si-daur-ulang
+    image: mariadb:10.11
+    restart: always
+    environment:
+      TZ: ${APP_TIMEZONE_STRING}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+      MARIADB_DATABASE: ${DB_NAME}
+    volumes:
+      - vol-db-si-daur-ulang:/var/lib/mysql
+    networks:
+      - net-si-daur-ulang
+
+volumes:
+  vol-app-si-daur-ulang:
+  vol-db-si-daur-ulang:
+
+networks:
+  net-si-daur-ulang:
+    driver: bridge

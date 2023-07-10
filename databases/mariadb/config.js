@@ -1,3 +1,4 @@
+const mysql2 =  require('mysql2');
 require('@next/env').loadEnvConfig('./');
 
 const dbConfig = {};
@@ -10,6 +11,7 @@ dbConfig.sequelize.host = process.env.DB_HOST;
 dbConfig.sequelize.dialect = process.env.DB_DIALECT;
 dbConfig.sequelize.port = process.env.DB_PORT;
 dbConfig.sequelize.timezone = process.env.APP_TIMEZONE_CODE;
+dbConfig.sequelize.dialectModule = mysql2;
 dbConfig.sequelize.define = {
   charset: 'utf8mb4',
   dialectOptions: {

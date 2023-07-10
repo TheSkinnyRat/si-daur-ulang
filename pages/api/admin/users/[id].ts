@@ -14,7 +14,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (!await roleCheck(req.headers['x-jwt-payload'] as string, 'admin', res)) return undefined;
+  if (!await roleCheck(res.getHeader('x-jwt-payload') as string, 'admin', res)) return undefined;
   if (req.method === 'GET') {
     try {
       const user = await User.findOne({

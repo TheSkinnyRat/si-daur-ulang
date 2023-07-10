@@ -142,7 +142,7 @@ export default function App({ query }: IProps): JSX.Element {
             name: response.success.data.name || '',
             phone: response.success.data.phone || '',
             address: response.success.data.address || '',
-            userRoleId: response.success.data.userRoleId || 3,
+            userRoleId: response.success.data.userRoleId,
           });
           setAlert({
             message: `Editing user with id: ${queryId}`,
