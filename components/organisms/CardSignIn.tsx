@@ -66,6 +66,9 @@ export default function App() {
       <div className="rounded-t text-center text-xl border-b border-slate-300 bg-slate-200 dark:border-zinc-800 dark:bg-zinc-800 p-3 font-bold text-indigo-500 dark:text-slate-200">
         <Alert type={alert.type} message={alert.message} isLoading={alert.isLoading} />
       </div>
+      <div className="m-4 mb-0 p-2 text-slate-700 dark:text-slate-200 bg-sky-300/50 rounded break-all">
+        <a href="https://forms.gle/dZgJth144DUHn6dC8" className="underline hover:no-underline" target="_blank">https://forms.gle/dZgJth144DUHn6dC8</a>
+      </div>
       <div className="p-4">
         <form className="grid grid-cols-1 gap-6" onSubmit={signInHandle}>
           <label className="block" htmlFor="email">
