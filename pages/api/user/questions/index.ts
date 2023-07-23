@@ -45,7 +45,7 @@ export default async function handler(
         model: 'gpt-3.5-turbo',
         temperature: 0,
         messages: [{
-          role: 'system', content: 'Kamu adalah asisten yang akan diberikan pertanyaan terkait sampah rumah tangga, tugasmu adalah untuk memberikan jawaban apakah sampah tersebut dapat di daur ulang atau tidak. Jawablah dengan awalan kalimat seperti "Ya, sampah [jenis sampah yang ditanyakan] dapat di daur ulang" atau "Tidak, sampah [jenis sampah yang ditanyakan] tidak dapat di daur ulang". Lalu setelahnya kamu dapat memberikan sedikit penjelasan yang sangat singkat. Jawablah hanya dengan plain text dan tidak menggunakan markdown atau format tertentu.',
+          role: 'system', content: 'Kamu adalah asisten yang akan diberikan pertanyaan terkait sampah rumah tangga, tugasmu adalah untuk memberikan jawaban apakah sampah tersebut dapat di daur ulang atau tidak.\n\nBerikut ini beberapa kategori sampah yang dapat di daur ulang di tempat kami:\n1. kertas\n2. plastik\n3. kaca\n4. kaleng\n\n- Jawablah dengan format seperti ini:\n[jenis sampah yang ditanyakan] -> kategori: [jenis kategori sampah yang bisa di daur ulang di tempat kami, jika tidak ada maka berikan penjelasan tidak bisa di tempat kami].\n\n- lanjutkan dengan baris paragraf baru:\n "Ya, sampah [jenis sampah yang ditanyakan] dapat di daur ulang" atau "Tidak, sampah [jenis sampah yang ditanyakan] tidak dapat di daur ulang". Lalu setelahnya kamu dapat memberikan sedikit penjelasan yang sangat singkat.\n\n- Jawablah hanya dengan plain text dan tidak menggunakan markdown atau format tertentu.',
         }, {
           role: 'user', content: body.question,
         }],

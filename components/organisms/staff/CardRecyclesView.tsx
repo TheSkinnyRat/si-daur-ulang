@@ -29,9 +29,9 @@ export default function App({ query }: IProps): JSX.Element {
   const [inputValue, setInputValue] = useState<IStaffUpdateRecycleData>({
     recycleStatusId: 4,
     actualType: '',
-    actualWeight: undefined,
-    actualPoint: undefined,
+    actualWeight: 0,
   });
+  const [actualPoint, setActualPoint] = useState(0);
 
   const getRecycleHandler = async () => {
     setIsLoading(true);
@@ -90,6 +90,17 @@ export default function App({ query }: IProps): JSX.Element {
     }
   };
 
+  const updateActualPoint = () => {
+    if (inputValue.actualWeight && inputValue.actualWeight > 0 && inputValue.actualType) {
+      if (inputValue.actualType === 'kertas') setActualPoint(inputValue.actualWeight * 500);
+      if (inputValue.actualType === 'plastik') setActualPoint(inputValue.actualWeight * 750);
+      if (inputValue.actualType === 'kaca') setActualPoint(inputValue.actualWeight * 800);
+      if (inputValue.actualType === 'kaleng') setActualPoint(inputValue.actualWeight * 600);
+    } else {
+      setActualPoint(0);
+    }
+  };
+
   useEffect(() => {
     const initialGetRecycle = async () => {
       setIsLoading(true);
@@ -119,6 +130,11 @@ export default function App({ query }: IProps): JSX.Element {
     };
     if (session?.user.accessToken && queryId) initialGetRecycle();
   }, [queryId, session?.user.accessToken]);
+
+  useEffect(() => {
+    updateActualPoint();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue]);
 
   return (
     <div>
@@ -249,18 +265,25 @@ export default function App({ query }: IProps): JSX.Element {
               <Alert type="success" message="Verify Recycle" />
             </div>
             <form className="grid grid-cols-none md:grid-cols-12 gap-5 m-3" onSubmit={verifyRecycleHandler}>
-              <label className="block col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualType">
-                <span className="text-slate-700 dark:text-slate-200">Actual Trash Type</span>
-                <input
-                  type="text"
+              <label className="block col-span-full md:col-span-5 lg:col-span-4 xl:col-span-3" htmlFor="actualType">
+                <span className="text-slate-700 dark:text-slate-200">Trash Type</span>
+                <select
                   id="actualType"
                   required
                   disabled={isLoading}
                   value={inputValue.actualType}
-                  onChange={(e) => setInputValue({ ...inputValue, actualType: e.target.value })}
-                  placeholder="Sampah Plastik / Kertas / Lainnya"
-                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
-                />
+                  onChange={(e) => setInputValue({
+                    ...inputValue,
+                    actualType: e.target.value,
+                  })}
+                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-300 dark:placeholder-zinc-200 placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
+                >
+                  <option value="" className="hidden" disabled>-- Select Actual Type --</option>
+                  <option value="kertas">Kertas</option>
+                  <option value="plastik">Plastik</option>
+                  <option value="kaca">Kaca</option>
+                  <option value="kaleng">Kaleng</option>
+                </select>
               </label>
               <label className="block md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualWeight">
                 <span className="text-slate-700 dark:text-slate-200">Actual Weight (kg)</span>
@@ -269,7 +292,7 @@ export default function App({ query }: IProps): JSX.Element {
                   id="actualWeight"
                   required
                   disabled={isLoading}
-                  value={inputValue.actualWeight}
+                  value={inputValue.actualWeight?.toString()}
                   onChange={(e) => setInputValue({
                     ...inputValue,
                     actualWeight: Number(e.target.value),
@@ -279,18 +302,9 @@ export default function App({ query }: IProps): JSX.Element {
               </label>
               <label className="block md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="actualPoint">
                 <span className="text-slate-700 dark:text-slate-200">Actual Point</span>
-                <input
-                  type="number"
-                  id="actualPoint"
-                  required
-                  disabled={isLoading}
-                  value={inputValue.actualPoint}
-                  onChange={(e) => setInputValue({
-                    ...inputValue,
-                    actualPoint: Number(e.target.value),
-                  })}
-                  className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
-                />
+                <div className="font-bold">
+                  {Number(actualPoint)?.toLocaleString('id-ID')}
+                </div>
               </label>
               <div className="mt-2 md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-4 lg:col-span-3 xl:col-span-2">
                 <Button

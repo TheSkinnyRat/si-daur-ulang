@@ -67,7 +67,6 @@ export interface IStaffUpdateRecycleData {
   recycleStatusId: number,
   actualType?: string,
   actualWeight?: number,
-  actualPoint?: number,
 }
 
 export interface IStaffUpdatePointWithdrawalData {

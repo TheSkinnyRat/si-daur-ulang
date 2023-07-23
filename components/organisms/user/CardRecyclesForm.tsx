@@ -74,18 +74,25 @@ export default function App(): JSX.Element {
           <Alert type={alert.type} message={alert.message} isLoading={alert.isLoading} />
         </div>
         <form className="grid grid-cols-none md:grid-cols-12 gap-5 m-3" onSubmit={formAddRecycleHandler}>
-          <label className="block col-span-full md:col-span-6 lg:col-span-5 xl:col-span-4" htmlFor="type">
+          <label className="block col-span-full md:col-span-5 lg:col-span-4 xl:col-span-3" htmlFor="type">
             <span className="text-slate-700 dark:text-slate-200">Trash Type</span>
-            <input
-              type="text"
+            <select
               id="type"
               required
               disabled={isLoading}
               value={inputValue.type}
-              onChange={(e) => setInputValue({ ...inputValue, type: e.target.value })}
-              placeholder="Sampah Plastik / Kertas / Lainnya"
-              className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
-            />
+              onChange={(e) => setInputValue({
+                ...inputValue,
+                type: e.target.value,
+              })}
+              className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-300 dark:placeholder-zinc-200 placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
+            >
+              <option value="" className="hidden" disabled>-- Select Trash Type --</option>
+              <option value="kertas">Kertas</option>
+              <option value="plastik">Plastik</option>
+              <option value="kaca">Kaca</option>
+              <option value="kaleng">Kaleng</option>
+            </select>
           </label>
           <label className="block md:col-start-1 lg:col-start-1 xl:col-start-1 col-span-full md:col-span-3 lg:col-span-2 xl:col-span-1" htmlFor="weight">
             <span className="text-slate-700 dark:text-slate-200">Weight (kg)</span>
@@ -94,7 +101,7 @@ export default function App(): JSX.Element {
               id="weight"
               required
               disabled={isLoading}
-              value={inputValue.weight}
+              value={inputValue.weight.toString()}
               onChange={(e) => setInputValue({ ...inputValue, weight: Number(e.target.value) })}
               className="w-full mt-1 rounded-md border dark:bg-zinc-600 dark:text-slate-100 border-slate-300 dark:border-zinc-600 px-3 py-1 placeholder-slate-600 dark:placeholder-zinc-200 placeholder-opacity-50 dark:placeholder-opacity-50 outline-none focus:ring-1 focus:ring-indigo-500 dark:focus:ring-zinc-200 disabled:opacity-50"
             />
