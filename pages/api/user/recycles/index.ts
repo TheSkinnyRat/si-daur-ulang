@@ -37,8 +37,8 @@ export default async function handler(
   } else if (req.method === 'POST') {
     const bodySchema = z.object({
       userId: z.number().min(0).optional(),
-      type: z.string().nonempty(),
-      weight: z.number().min(0.1).max(10),
+      type: z.enum(['kertas', 'plastik', 'kaca', 'kaleng']),
+      weight: z.number().min(1).max(10),
       selfDelivery: z.number().min(0).max(1),
       recycleStatusId: z.number().min(0).optional(),
     });

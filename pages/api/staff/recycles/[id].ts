@@ -44,9 +44,8 @@ export default async function handler(
       }),
       z.object({
         recycleStatusId: z.literal(4),
-        actualType: z.string().nonempty(),
+        actualType: z.enum(['kertas', 'plastik', 'kaca', 'kaleng']),
         actualWeight: z.number().min(0.1).max(100),
-        actualPoint: z.number().min(0),
       }),
     ]);
 
@@ -71,6 +70,19 @@ export default async function handler(
       });
 
       if (body.recycleStatusId === 4) {
+        let actualPoint = 0;
+        if (body.actualType === 'kertas') actualPoint = body.actualWeight * 500;
+        else if (body.actualType === 'plastik') actualPoint = body.actualWeight * 750;
+        else if (body.actualType === 'kaca') actualPoint = body.actualWeight * 800;
+        else if (body.actualType === 'kaleng') actualPoint = body.actualWeight * 600;
+        await Recycle.update({
+          actualPoint,
+        }, {
+          where: {
+            id: req.query.id,
+          },
+        });
+
         const point = await Point.findOne({
           where: {
             userId: recycle.userId,
@@ -79,7 +91,7 @@ export default async function handler(
         if (!point) {
           const createdPoint = await Point.create({
             userId: recycle.userId,
-            amount: body.actualPoint,
+            amount: actualPoint,
           });
           await PointHistory.create({
             pointId: createdPoint.id,
@@ -87,14 +99,14 @@ export default async function handler(
             date: new Date(),
             type: 'credit',
             description: 'Recycle verified',
-            amount: body.actualPoint,
+            amount: actualPoint,
             startPoint: 0,
-            currentPoint: body.actualPoint,
+            currentPoint: actualPoint,
           });
         } else {
           point.amount = Number(point.amount);
           await Point.update({
-            amount: point.amount + body.actualPoint,
+            amount: point.amount + actualPoint,
           }, {
             where: {
               userId: recycle.userId,
@@ -106,9 +118,9 @@ export default async function handler(
             date: new Date(),
             type: 'credit',
             description: 'Recycle verified',
-            amount: body.actualPoint,
+            amount: actualPoint,
             startPoint: point.amount,
-            currentPoint: point.amount + body.actualPoint,
+            currentPoint: point.amount + actualPoint,
           });
         }
       }
