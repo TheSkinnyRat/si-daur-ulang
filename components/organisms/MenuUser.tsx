@@ -39,6 +39,13 @@ export default function App() {
     router.push('/dashboard');
   };
 
+  const logoutAlert = () => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to logout?')) {
+      signOut();
+    }
+  };
+
   const ProfileMenu = (
     <Menu as="div" className="w-fit">
       <Menu.Button as="div">
@@ -83,7 +90,7 @@ export default function App() {
             {({ active }) => (
               <button
                 type="button"
-                onClick={() => signOut()}
+                onClick={logoutAlert}
                 className={`${
                   active
                     ? 'bg-indigo-500 text-slate-100'
